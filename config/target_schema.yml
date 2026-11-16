@@ -1,0 +1,88 @@
+# Target schema for the harmonized tables.
+#
+# Variable names and codings follow the convention of the IDB Social Sector
+# harmonized household surveys (suffix _c = survey level, _ch = household,
+# _ci = individual), so results can be compared with the IDB's own published
+# harmonization programs:
+# https://github.com/EL-BID/armonizacion_microdatos_encuestas_hogares_scl
+#
+# This is a core subset (58 variables). Descriptions are written for this repo.
+# status_in_scope: core = harmonized in v1, later = planned.
+
+variables:
+
+  # ---- survey design and identifiers ----
+  - {name: pais_c,     level: survey,    domain: design, type: str,   description: "ISO3 country code"}
+  - {name: anio_c,     level: survey,    domain: design, type: int,   description: "Survey year"}
+  - {name: mes_c,      level: survey,    domain: design, type: int,   description: "Month of interview", range: [1, 12]}
+  - {name: region_c,   level: survey,    domain: design, type: int,   description: "Country-specific first-level administrative region"}
+  - {name: zona_c,     level: survey,    domain: design, type: int,   description: "Area of residence", values: {0: rural, 1: urban}}
+  - {name: idh_ch,     level: household, domain: design, type: int,   description: "Household identifier"}
+  - {name: idp_ci,     level: person,    domain: design, type: int,   description: "Person identifier within the household"}
+  - {name: factor_ch,  level: household, domain: design, type: float, description: "Household expansion factor", range: [0, null]}
+  - {name: factor_ci,  level: person,    domain: design, type: float, description: "Person expansion factor", range: [0, null]}
+  - {name: upm_ci,     level: person,    domain: design, type: int,   description: "Primary sampling unit"}
+  - {name: estrato_ci, level: person,    domain: design, type: int,   description: "Sampling stratum"}
+
+  # ---- demographics ----
+  - {name: relacion_ci, level: person, domain: demographics, type: int, description: "Relationship to household head",
+     values: {1: head, 2: spouse_partner, 3: child, 4: other_relative, 5: non_relative, 6: domestic_worker}}
+  - {name: sexo_ci,     level: person, domain: demographics, type: int, description: "Sex", values: {1: male, 2: female}}
+  - {name: edad_ci,     level: person, domain: demographics, type: int, description: "Age in completed years", range: [0, 120]}
+  - {name: civil_ci,    level: person, domain: demographics, type: int, description: "Marital status",
+     values: {1: single, 2: formal_or_informal_union, 3: divorced_or_separated, 4: widowed}}
+  - {name: afroind_ci,  level: person, domain: demographics, type: int, description: "Self-identified race or ethnicity",
+     values: {1: indigenous, 2: afro_descendant, 3: other, 9: not_asked}}
+  - {name: dis_ci,      level: person, domain: demographics, type: int, description: "Person with a disability", values: {0: "no", 1: "yes"}}
+  - {name: migrante_ci, level: person, domain: demographics, type: int, description: "International migrant", values: {0: "no", 1: "yes"}}
+
+  # ---- labor market ----
+  - {name: condocup_ci,  level: person, domain: labor, type: int, description: "Labor force status",
+     values: {1: employed, 2: unemployed, 3: inactive, 4: below_working_age}}
+  - {name: categopri_ci, level: person, domain: labor, type: int, description: "Employment category in main job",
+     values: {0: other, 1: employer, 2: own_account, 3: employee, 4: unpaid}}
+  - {name: ocupa_ci,     level: person, domain: labor, type: int, description: "Occupation group in main job (9 IDB groups)", range: [1, 9]}
+  - {name: rama_ci,      level: person, domain: labor, type: int, description: "Industry in main job (9 IDB groups)", range: [1, 9]}
+  - {name: horaspri_ci,  level: person, domain: labor, type: float, description: "Weekly hours worked in main job", range: [0, 168]}
+  - {name: horastot_ci,  level: person, domain: labor, type: float, description: "Weekly hours worked in all jobs", range: [0, 168]}
+  - {name: tamemp_ci,    level: person, domain: labor, type: int, description: "Firm size", values: {1: small, 2: medium, 3: large}}
+  - {name: spublico_ci,  level: person, domain: labor, type: int, description: "Works in the public sector", values: {0: "no", 1: "yes"}}
+  - {name: tipocontrato_ci, level: person, domain: labor, type: int, description: "Type of contract in main job"}
+  - {name: cotizando_ci, level: person, domain: labor, type: int, description: "Currently contributing to social security", values: {0: "no", 1: "yes"}}
+  - {name: afiliado_ci,  level: person, domain: labor, type: int, description: "Affiliated to social security", values: {0: "no", 1: "yes"}}
+
+  # ---- income (monthly, local currency, current prices) ----
+  - {name: ylmpri_ci,   level: person,    domain: income, type: float, description: "Monetary labor income, main job", range: [0, null]}
+  - {name: ylnmpri_ci,  level: person,    domain: income, type: float, description: "Non-monetary labor income, main job", range: [0, null]}
+  - {name: ylmsec_ci,   level: person,    domain: income, type: float, description: "Monetary labor income, second job", range: [0, null]}
+  - {name: ylm_ci,      level: person,    domain: income, type: float, description: "Total monetary labor income", range: [0, null]}
+  - {name: ylnm_ci,     level: person,    domain: income, type: float, description: "Total non-monetary labor income", range: [0, null]}
+  - {name: ynlm_ci,     level: person,    domain: income, type: float, description: "Total monetary non-labor income", range: [0, null]}
+  - {name: ypen_ci,     level: person,    domain: income, type: float, description: "Contributory pension income", range: [0, null]}
+  - {name: remesas_ci,  level: person,    domain: income, type: float, description: "Remittances received", range: [0, null]}
+  - {name: rentaimp_ch, level: household, domain: income, type: float, description: "Imputed rent of owner-occupied housing", range: [0, null]}
+  - {name: lp_ci,       level: person,    domain: income, type: float, description: "Official national poverty line", range: [0, null]}
+  - {name: lpe_ci,      level: person,    domain: income, type: float, description: "Official national extreme poverty line", range: [0, null]}
+
+  # ---- education ----
+  - {name: asiste_ci, level: person, domain: education, type: int, description: "Currently attends school", values: {0: "no", 1: "yes"}}
+  - {name: aedu_ci,   level: person, domain: education, type: int, description: "Years of schooling completed", range: [0, 30]}
+  - {name: edupub_ci, level: person, domain: education, type: int, description: "Attends a public institution", values: {0: "no", 1: "yes"}}
+
+  # ---- housing and assets ----
+  - {name: aguared_ch,    level: household, domain: housing, type: int, description: "Piped water access", values: {0: "no", 1: "yes"}}
+  - {name: aguafuente_ch, level: household, domain: housing, type: int, description: "Main source of drinking water"}
+  - {name: luz_ch,        level: household, domain: housing, type: int, description: "Electricity is the main lighting source", values: {0: "no", 1: "yes"}}
+  - {name: bano_ch,       level: household, domain: housing, type: int, description: "Sanitation facility"}
+  - {name: piso_ch,       level: household, domain: housing, type: int, description: "Main floor material"}
+  - {name: pared_ch,      level: household, domain: housing, type: int, description: "Main wall material"}
+  - {name: techo_ch,      level: household, domain: housing, type: int, description: "Main roof material"}
+  - {name: dorm_ch,       level: household, domain: housing, type: int, description: "Number of rooms used only for sleeping", range: [0, 30]}
+  - {name: cuartos_ch,    level: household, domain: housing, type: int, description: "Number of rooms in the dwelling", range: [0, 50]}
+  - {name: viviprop_ch,   level: household, domain: housing, type: int, description: "Dwelling tenure",
+     values: {0: rented, 1: owned, 3: occupied_de_facto}}
+  - {name: internet_ch,   level: household, domain: housing, type: int, description: "Household has an internet connection", values: {0: "no", 1: "yes"}}
+  - {name: cel_ch,        level: household, domain: housing, type: int, description: "Household has mobile phone service", values: {0: "no", 1: "yes"}}
+  - {name: compu_ch,      level: household, domain: housing, type: int, description: "Household owns a computer", values: {0: "no", 1: "yes"}}
+  - {name: refrig_ch,     level: household, domain: housing, type: int, description: "Household owns a refrigerator", values: {0: "no", 1: "yes"}}
+  - {name: auto_ch,       level: household, domain: housing, type: int, description: "Household owns a car", values: {0: "no", 1: "yes"}}

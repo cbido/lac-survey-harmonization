@@ -1,0 +1,110 @@
+# Surveys in scope. Microdata is never committed: scripts/download_data.py fetches the
+# open files listed in config/sources.yml into data/ (see data/README.md).
+#
+# idb_program: path inside the IDB harmonization repo used as the reference
+#              (gold standard) for evaluating LLM-proposed mappings.
+# dictionary:  how the survey's data dictionary is built.
+#                microdata  from the raw file, with ingest/to_parquet.py
+#                ddi        from the public DDI codebook, with ingest/ddi_to_dictionary.py
+# design:      raw variables for weights, PSU and strata (confirmar contra libro de códigos)
+# checks:      table and expressions used by validate/ingest_report.py
+
+idb_repo: https://github.com/EL-BID/armonizacion_microdatos_encuestas_hogares_scl
+
+surveys:
+
+  # ---- Chile: Encuesta de Caracterización Socioeconómica Nacional (Casen), MDSF ----
+  # ojo: se usan las bases originalmente publicadas ("históricas"), que son las que
+  # usan los programas del BID. La serie actualizada 2006-2024 queda para después.
+  CHL_2015:
+    name: Casen 2015
+    year: 2015
+    raw_file: "data/raw/CHL_2015/unpacked/Casen 2015.dta"
+    comuna_file: data/raw/CHL_2015/unpacked/casen_2015_provincia_comuna.dta
+    dictionary: microdata
+    idb_program: CHL/CASEN/program/CHL_2015m11_m12_m1_variablesBID.do
+    design: {weight: expr, psu: varunit, strata: varstrat}
+    checks: {table: CHL_2015, household_id: folio, poor: "pobreza IN (1, 2)", extreme: "pobreza = 1"}
+
+  CHL_2017:
+    name: Casen 2017
+    year: 2017
+    raw_file: "data/raw/CHL_2017/unpacked/Casen 2017.dta"
+    comuna_file: data/raw/CHL_2017/unpacked/casen_2017_provincia_comuna.dta
+    dictionary: microdata
+    idb_program: CHL/CASEN/program/CHL_2017m11_m12_m1_variablesBID.do
+    design: {weight: expr, psu: varunit, strata: varstrat}
+    checks: {table: CHL_2017, household_id: folio, poor: "pobreza IN (1, 2)", extreme: "pobreza = 1"}
+
+  CHL_2020:
+    name: Casen en Pandemia 2020
+    year: 2020
+    raw_file: data/raw/CHL_2020/unpacked/Casen_en_Pandemia_2020_STATA_revisada2022_09.dta
+    comuna_file: data/raw/CHL_2020/unpacked/casen_en_pandemia_2020_provincia_comuna.dta
+    dictionary: microdata
+    idb_program: CHL/CASEN/program/CHL_2020m11_m12_m1_variablesBID.do
+    design: {weight: expr, psu: cod_upm, strata: estrato}
+    checks: {table: CHL_2020, household_id: folio, poor: "pobreza IN (1, 2)", extreme: "pobreza = 1"}
+    note: Cuestionario reducido, aplicado en modalidad mixta por la pandemia.
+
+  CHL_2022:
+    name: Casen 2022
+    year: 2022
+    raw_file: "data/raw/CHL_2022/unpacked/Base de datos Casen 2022 STATA_18 marzo 2024.dta"
+    comuna_file: data/raw/CHL_2022/casen_2022_provincia_comuna.dta
+    dictionary: microdata
+    idb_program: CHL/CASEN/program/CHL_2022m11_m12_m1_variablesBID.do
+    design: {weight: expr, psu: cod_upm, strata: estrato}
+    checks: {table: CHL_2022, household_id: folio, poor: "pobreza IN (1, 2)", extreme: "pobreza = 1"}
+    # variables oficiales que se llevan sin tocar, para contrastar
+    benchmarks: {pobreza_oficial_raw: pobreza, ytrabajocor_raw: ytrabajocor, ytotcorh_raw: ytotcorh, numper_raw: numper}
+    # glosas de ocupación y rama, con los códigos que asignó el ministerio
+    coding:
+      key: [folio, id_persona]
+      variables: {title: o9a, tasks: o9b, workplace: o24, occ_code: oficio4_08, ind_code: rama4, weight: expr}
+
+  # ---- Bolivia: Encuesta de Hogares (EH), INE ----
+  BOL_2017:
+    name: Encuesta de Hogares 2017
+    year: 2017
+    raw_files:
+      persona: data/raw/BOL_2017/EH2017_Personas.sav
+      vivienda: data/raw/BOL_2017/EH2017_Vivienda.sav
+      equipamiento: data/raw/BOL_2017/EH2017_Equipamiento.sav
+    ddi_file: data/metadata/BOL_2017_ddi.xml
+    dictionary: ddi          # el DDI trae el texto de las preguntas, los .sav no
+    idb_program: BOL/ECH/program/BOL_2017m11_variablesBID.do
+    design: {weight: factor, psu: upm, strata: estrato}
+    checks: {table: BOL_2017_persona, household_id: folio, poor: "p0 = 1", extreme: "pext0 = 1"}
+    note: Los archivos traen además factor_rev2025 (reajustado con proyecciones rev. 2025). Decidir cuál usar.
+
+  BOL_2021:
+    name: Encuesta de Hogares 2021
+    year: 2021
+    raw_files:
+      persona: data/raw/BOL_2021/EH2021_Personas.sav
+      vivienda: data/raw/BOL_2021/EH2021_Vivienda.sav
+      equipamiento: data/raw/BOL_2021/EH2021_Equipamiento.sav
+    ddi_file: data/metadata/BOL_2021_ddi.xml
+    dictionary: ddi          # el DDI trae el texto de las preguntas, los .sav no
+    idb_program: BOL/ECH/program/BOL_2021m11_variablesBID.do
+    design: {weight: factor, psu: upm, strata: estrato}
+    checks: {table: BOL_2021_persona, household_id: folio, poor: "p0 = 1", extreme: "pext0 = 1"}
+    note: Los archivos traen además factor_rev2025 (reajustado con proyecciones rev. 2025). Decidir cuál usar.
+
+  # ---- Costa Rica: Encuesta Nacional de Hogares (ENAHO), INEC ----
+  CRI_2017:
+    name: ENAHO 2017
+    year: 2017
+    ddi_file: data/metadata/CRI_2017_ddi.xml
+    dictionary: ddi
+    idb_program: CRI/ENAHO/program/CRI_2017m7_variablesBID.do
+    design: {weight: factor, psu: upm, strata: TODO}
+
+  CRI_2022:
+    name: ENAHO 2022
+    year: 2022
+    ddi_file: data/metadata/CRI_2022_ddi.xml
+    dictionary: ddi
+    idb_program: CRI/ENAHO/program/CRI_2022m7_variablesBID.do
+    design: {weight: factor, psu: upm, strata: TODO}

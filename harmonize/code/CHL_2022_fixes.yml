@@ -1,0 +1,5 @@
+# What the first build found, sent back to the model with the affected targets.
+dorm_ch: "The expression used v29a alone and 96% of rows came out missing. v29a is only asked of households that share a dwelling. Use v29a where it has a value and v27a otherwise. -88 means does not know."
+ocupa_ci: "The one-digit code left IDB group 5 (en servicios) empty. Use the four-digit CIUO-08 code oficio4_08. IDB groups: 1 professionals and technicians (CIUO major groups 2 and 3), 2 directors and senior officials (1), 3 administrative and intermediate level (4), 4 merchants and sales workers (sub-major group 52), 5 service workers (51, 53, 54), 6 agricultural workers (6), 7 non-agricultural labourers, machine operators and transport (7 and 8), 8 armed forces (0), 9 other (9). Negative codes are missing."
+edupub_ci: "People who do not attend school came out as 0, so the variable had a value for everyone. It must be missing (NULL) for anyone not currently attending."
+ynlm_ci: "The result has negative values (minimum -1), which an income cannot be. Floor the result at 0."

@@ -1,0 +1,581 @@
+# Recoding code for CHL_2022, written by claude-sonnet-5-5 from the reviewed gold standard.
+# Each expression is DuckDB SQL over the person-level table. Edit by hand where needed and
+# set written_by to your name: harmonize/build_harmonized.py runs whatever is in this file.
+survey: CHL_2022
+model: claude-sonnet-5-5
+variables:
+- target_var: mes_c
+  sql: CASE WHEN fecha_entrev IS NULL THEN NULL ELSE CAST(month(TIMESTAMP '1960-01-01' + to_milliseconds(fecha_entrev))
+    AS INTEGER) END
+  uses:
+  - fecha_entrev
+  not_approved: []
+  note: fecha_entrev is a Stata date-time (milliseconds since 1960-01-01), so the month is taken from that timestamp.
+  assumptions: The model assumed a daily date and its expression failed the execution test. Corrected by hand after
+    inspecting the stored values.
+  written_by: model, corrected by hand
+  sql_as_generated: CASE WHEN fecha_entrev IS NULL THEN NULL ELSE CAST(month(DATE '1960-01-01' + CAST(fecha_entrev
+    AS INTEGER)) AS INTEGER) END
+- target_var: region_c
+  sql: CASE WHEN region BETWEEN 1 AND 16 THEN CAST(region AS INTEGER) ELSE NULL END
+  uses:
+  - region
+  not_approved: []
+  note: Passes the region code through unchanged (codes 1-16); values outside that range become NULL.
+  assumptions: The raw region codes are kept as the country-specific codes, including 15 (Arica y Parinacota) and
+    16 (Ñuble).
+  written_by: model
+- target_var: zona_c
+  sql: CASE WHEN area = 1 THEN 1 WHEN area = 2 THEN 0 ELSE NULL END
+  uses:
+  - area
+  not_approved: []
+  note: Maps Urbano (1) to 1 and Rural (2) to 0; anything else is NULL.
+  assumptions: ''
+  written_by: model
+- target_var: idh_ch
+  sql: CAST(folio AS INTEGER)
+  uses:
+  - folio
+  not_approved: []
+  note: Uses the household folio as the household identifier.
+  assumptions: folio uniquely identifies the household.
+  written_by: model
+- target_var: idp_ci
+  sql: CAST(id_persona AS INTEGER)
+  uses:
+  - id_persona
+  not_approved: []
+  note: Uses the person identifier within the household directly.
+  assumptions: ''
+  written_by: model
+- target_var: factor_ch
+  sql: CASE WHEN expr >= 0 THEN CAST(expr AS DOUBLE) ELSE NULL END
+  uses:
+  - expr
+  not_approved: []
+  note: Uses the regional expansion factor as the household weight; negative values become NULL.
+  assumptions: The regional expansion factor (expr) is the appropriate household weight.
+  written_by: model
+- target_var: factor_ci
+  sql: CAST(expr AS DOUBLE)
+  uses:
+  - expr
+  not_approved: []
+  note: Casts the regional expansion factor to float; NULL stays NULL.
+  assumptions: Regional expansion factor (expr) is used as the person weight.
+  written_by: model
+- target_var: upm_ci
+  sql: CAST(cod_upm AS INTEGER)
+  uses:
+  - cod_upm
+  not_approved: []
+  note: Uses the UPM code directly as the primary sampling unit.
+  assumptions: ''
+  written_by: model
+- target_var: estrato_ci
+  sql: CAST(estrato AS INTEGER)
+  uses:
+  - estrato
+  not_approved: []
+  note: Uses the stratum code (comuna-area-NSE) directly.
+  assumptions: ''
+  written_by: model
+- target_var: relacion_ci
+  sql: CASE WHEN pco1 = 1 THEN 1 WHEN pco1 IN (2,3) THEN 2 WHEN pco1 IN (4,5,6) THEN 3 WHEN pco1 IN (7,8,9,10,11,12,13)
+    THEN 4 WHEN pco1 = 14 THEN 5 WHEN pco1 = 15 THEN 6 ELSE NULL END
+  uses:
+  - pco1
+  not_approved: []
+  note: Maps head to 1, spouse/partner (both sexes) to 2, all child types to 3, other relatives (parents, in-laws,
+    grandchildren, siblings, etc.) to 4, non-relative to 5, live-in domestic service to 6.
+  assumptions: Stepchildren (code 6) are classified as children; in-laws such as son/daughter-in-law are classified
+    as other relatives.
+  written_by: model
+- target_var: sexo_ci
+  sql: CASE WHEN sexo IN (1,2) THEN CAST(sexo AS INTEGER) ELSE NULL END
+  uses:
+  - sexo
+  not_approved: []
+  note: Raw codes already match target codes (1=male, 2=female); other values become NULL.
+  assumptions: ''
+  written_by: model
+- target_var: edad_ci
+  sql: CASE WHEN edad BETWEEN 0 AND 120 THEN CAST(edad AS INTEGER) ELSE NULL END
+  uses:
+  - edad
+  not_approved: []
+  note: Uses age in years directly, NULL if outside 0-120.
+  assumptions: ''
+  written_by: model
+- target_var: civil_ci
+  sql: CASE WHEN ecivil IN (1,2,3) THEN 2 WHEN ecivil IN (4,5,6) THEN 3 WHEN ecivil = 7 THEN 4 WHEN ecivil = 8 THEN
+    1 ELSE NULL END
+  uses:
+  - ecivil
+  not_approved: []
+  note: Married and cohabiting (civil or de facto) map to union; annulled, separated and divorced map to divorced_or_separated;
+    widowed to 4; single to 1.
+  assumptions: Annulled (4) is treated as divorced/separated. Civil-union cohabitants (3) are treated as in union.
+  written_by: model
+- target_var: afroind_ci
+  sql: CASE WHEN r3 BETWEEN 1 AND 10 THEN 1 WHEN r3 = 11 THEN 3 ELSE NULL END
+  uses:
+  - r3
+  not_approved: []
+  note: Membership in any of the ten indigenous peoples gives 1; 'does not belong' gives 3. Missing stays NULL.
+  assumptions: The question has no afro-descendant option, so code 2 is never produced; 'other' includes afro-descendants
+    and non-indigenous people.
+  written_by: model
+- target_var: dis_ci
+  sql: CASE WHEN disc_wg = 1 THEN 1 WHEN disc_wg = 0 THEN 0 ELSE NULL END
+  uses:
+  - disc_wg
+  not_approved: []
+  note: Uses the Washington Group disability indicator directly; 'No sabe' (-88) becomes NULL.
+  assumptions: Don't-know is treated as missing rather than no disability.
+  written_by: model
+- target_var: migrante_ci
+  sql: CASE WHEN lugar_nac = 1 THEN 1 WHEN lugar_nac = 0 THEN 0 ELSE NULL END
+  uses:
+  - lugar_nac
+  not_approved: []
+  note: Born outside Chile is a migrant; born in Chile is not; don't know becomes NULL.
+  assumptions: Migrant is defined by birthplace (foreign-born).
+  written_by: model
+- target_var: condocup_ci
+  sql: CASE WHEN edad IS NULL THEN NULL WHEN edad < 15 THEN 4 WHEN o1 = 1 OR o2 = 1 OR o3 = 1 THEN 1 WHEN o6 = 1
+    THEN 2 WHEN o1 = 2 OR o2 = 2 OR o3 = 2 OR o6 = 2 THEN 3 ELSE NULL END
+  uses:
+  - edad
+  - o1
+  - o2
+  - o3
+  - o6
+  not_approved: []
+  note: Under 15 is below working age. Anyone who worked, did some activity or had a job with temporary absence
+    is employed. Otherwise job seekers are unemployed and the rest inactive.
+  assumptions: The working-age threshold is 15. Unemployment is defined by job search alone, without an availability
+    question. The raw-variable set is used because it reproduces the definition and handles age explicitly; the
+    activ alternative has no category for below working age.
+  written_by: model
+- target_var: categopri_ci
+  sql: CASE WHEN o15 = 1 THEN 1 WHEN o15 = 2 THEN 2 WHEN o15 IN (3,4,5,6,7) THEN 3 WHEN o15 = 9 THEN 4 WHEN o15
+    = 8 THEN 0 ELSE NULL END
+  uses:
+  - o15
+  not_approved: []
+  note: Employer is 1, own account is 2, public and private employees and domestic service are 3, unpaid family
+    worker is 4, and armed forces are 0.
+  assumptions: Armed forces (8) are put in 'other'. Domestic service is counted as employee.
+  written_by: model
+- target_var: ocupa_ci
+  sql: CASE WHEN oficio4_08 IS NULL OR oficio4_08 < 0 THEN NULL WHEN oficio4_08 BETWEEN 100 AND 399 THEN 8 WHEN
+    oficio4_08 < 1000 THEN NULL WHEN oficio4_08 >= 5200 AND oficio4_08 < 5300 THEN 4 WHEN oficio4_08 >= 5000 AND
+    oficio4_08 < 6000 THEN 5 WHEN oficio4_08 >= 1000 AND oficio4_08 < 2000 THEN 2 WHEN oficio4_08 >= 2000 AND oficio4_08
+    < 4000 THEN 1 WHEN oficio4_08 >= 4000 AND oficio4_08 < 5000 THEN 3 WHEN oficio4_08 >= 6000 AND oficio4_08 <
+    7000 THEN 6 WHEN oficio4_08 >= 7000 AND oficio4_08 < 9000 THEN 7 WHEN oficio4_08 >= 9000 AND oficio4_08 < 10000
+    THEN 9 ELSE NULL END
+  uses:
+  - oficio4_08
+  not_approved: []
+  note: Maps the CIUO-08 four-digit code to the 9 IDB groups. Armed forces (codes 100-399) go to 8, sub-major group
+    52 goes to 4 (sales), and the other 5xxx codes (51, 53, 54) go to 5 (services). Negative or unclassifiable codes
+    give NULL.
+  assumptions: Armed forces codes are the 3-digit values 100-399 listed in the code book. Any other code below 1000
+    is set to NULL. Group 4 is limited to sub-major 52 as the definition states.
+  written_by: model, second attempt after a failed check
+  previous_sql: CASE oficio1_08 WHEN 1 THEN 2 WHEN 2 THEN 1 WHEN 3 THEN 1 WHEN 4 THEN 3 WHEN 5 THEN 4 WHEN 6 THEN
+    6 WHEN 7 THEN 7 WHEN 8 THEN 7 WHEN 0 THEN 8 WHEN 9 THEN 9 ELSE NULL END
+  fixed_because: 'The one-digit code left IDB group 5 (en servicios) empty. Use the four-digit CIUO-08 code oficio4_08.
+    IDB groups: 1 professionals and technicians (CIUO major groups 2 and 3), 2 directors and senior officials (1),
+    3 administrative and intermediate level (4), 4 merchants and sales workers (sub-major group 52), 5 service workers
+    (51, 53, 54), 6 agricultural workers (6), 7 non-agricultural labourers, machine operators and transport (7 and
+    8), 8 armed forces (0), 9 other (9). Negative codes are missing.'
+- target_var: rama_ci
+  sql: CASE WHEN rama1 = 1 THEN 1 WHEN rama1 = 2 THEN 2 WHEN rama1 = 3 THEN 3 WHEN rama1 IN (4,5) THEN 4 WHEN rama1
+    = 6 THEN 5 WHEN rama1 IN (7,9) THEN 6 WHEN rama1 IN (8,10) THEN 7 WHEN rama1 IN (11,12,13,14) THEN 8 WHEN rama1
+    BETWEEN 15 AND 21 THEN 9 ELSE NULL END
+  uses:
+  - rama1
+  not_approved: []
+  note: 'Collapses the 21 ISIC Rev.4 sections into the 9 IDB industry groups: agriculture, mining, manufacturing,
+    utilities, construction, commerce/hotels/restaurants, transport/communications, finance/business services, and
+    community/social/personal services. Negative codes return NULL.'
+  assumptions: The target gives no code list, so I used the standard IDB 9-group scheme. Real estate (L) and professional
+    and administrative services (M, N) go to group 8. Information and communications (J) goes to transport and communications
+    (7).
+  written_by: model
+- target_var: horaspri_ci
+  sql: CASE WHEN o10 BETWEEN 0 AND 168 THEN CAST(o10 AS DOUBLE) ELSE NULL END
+  uses:
+  - o10
+  not_approved: []
+  note: Uses o10, the habitual weekly hours in the main job, which matches the target definition. y2_hrs is last
+    month's contracted hours and is not a weekly measure. -88 and out-of-range values return NULL.
+  assumptions: The alternative set (o10) is used rather than y2_hrs, because y2_hrs is the contracted payroll hours
+    for the past month and not weekly hours.
+  written_by: model
+- target_var: tamemp_ci
+  sql: CASE WHEN o25 IN (1,2) THEN 1 WHEN o25 IN (3,4) THEN 2 WHEN o25 IN (5,6) THEN 3 ELSE NULL END
+  uses:
+  - o25
+  not_approved: []
+  note: Small is 1-5 people, medium is 6-49 people, and large is 50 or more. -88 and any other value return NULL.
+  assumptions: The IDB cutoffs are small up to 5, medium 6-50, large over 50. The raw band 50-199 is placed entirely
+    in large, so a firm of exactly 50 is counted as large.
+  written_by: model
+- target_var: spublico_ci
+  sql: CASE WHEN o15 IN (3,4,8) THEN 1 WHEN o15 IN (1,2,5,6,7,9) THEN 0 ELSE NULL END
+  uses:
+  - o15
+  not_approved: []
+  note: Public sector is 1 for public employees (3), public-enterprise employees (4) and armed forces and police
+    (8). All other occupational categories are 0, and a missing value stays NULL.
+  assumptions: Armed forces and police (8) are counted as public sector.
+  written_by: model
+- target_var: tipocontrato_ci
+  sql: CASE WHEN o19 = 3 THEN 3 WHEN o18 = 1 THEN 1 WHEN o18 IN (2,3) THEN 2 WHEN o18 IS NULL AND o12 = 1 THEN 1
+    WHEN o18 IS NULL AND o12 IN (2,3,4,5) THEN 2 ELSE NULL END
+  uses:
+  - o12
+  - o18
+  - o19
+  not_approved: []
+  note: 'A worker with no contract (o19=3) gets 3. Otherwise an indefinite-term contract (o18=1) gets 1 (permanent),
+    and fixed-term or per-project contracts (o18=2 or 3) get 2 (temporary). When o18 is missing, o12 is the fallback:
+    permanent gets 1, and seasonal, occasional, trial or fixed-term gets 2.'
+  assumptions: The target gives no code list, so I assumed the IDB scheme 1=permanent, 2=temporary, 3=no contract.
+    A contract that is written but not yet signed (o19=2) is not treated as no contract. Negative codes return NULL
+    unless another variable gives a valid answer.
+  written_by: model
+- target_var: cotizando_ci
+  sql: CASE WHEN o32 BETWEEN 1 AND 5 THEN 1 WHEN o32 = 6 THEN 0 ELSE NULL END
+  uses:
+  - o32
+  not_approved: []
+  note: Codes 1-5 (contributed to AFP, IPS, CAPREDENA, DIPRECA or other) map to 1, and code 6 (not contributing)
+    maps to 0. 'No sabe' (-88) and missing values return NULL.
+  assumptions: ''
+  written_by: model
+- target_var: afiliado_ci
+  sql: CASE WHEN o31 = 1 OR o32 BETWEEN 1 AND 5 THEN 1 WHEN o31 = 2 THEN 0 ELSE NULL END
+  uses:
+  - o31
+  - o32
+  not_approved: []
+  note: Affiliated is 1 if o31 is 1 or if the person contributed last month (o32 in 1-5), since contributing implies
+    affiliation. It is 0 if o31 is 2, and NULL otherwise.
+  assumptions: A person who reports not affiliated (o31=2) but contributing (o32 in 1-5) is coded as affiliated.
+    A person with o31 = -88 and o32 = 6 is left NULL.
+  written_by: model
+- target_var: ylmpri_ci
+  sql: CAST(yoprcor AS DOUBLE)
+  uses:
+  - yoprcor
+  not_approved: []
+  note: Uses the approved corrected main-occupation income variable (yoprcor) directly, instead of the alternative
+    set of components.
+  assumptions: yoprcor is treated as the monetary income of the main job. Missing values stay NULL.
+  written_by: model
+- target_var: ylnmpri_ci
+  sql: CASE WHEN COALESCE(y0501,y0502,y0503,y0504,y0505,y0506,y0507,y0508,y0509,y0510,y0511,y0512,y0801) IS NULL
+    THEN NULL ELSE CAST(COALESCE(y0501,0)+COALESCE(y0502,0)+COALESCE(y0503,0)+COALESCE(y0504,0)+COALESCE(y0505,0)+COALESCE(y0506,0)+COALESCE(y0507,0)+COALESCE(y0508,0)+COALESCE(y0509,0)+COALESCE(y0510,0)+COALESCE(y0511,0)+COALESCE(y0512,0)+COALESCE(y0801,0)
+    AS DOUBLE) END
+  uses:
+  - y0501
+  - y0502
+  - y0503
+  - y0504
+  - y0505
+  - y0506
+  - y0507
+  - y0508
+  - y0509
+  - y0510
+  - y0511
+  - y0512
+  - y0801
+  not_approved: []
+  note: Sums all in-kind main-job components for employees and the self-employed. Missing components count as zero,
+    and the result is NULL when all are missing.
+  assumptions: ''
+  written_by: model
+- target_var: ylmsec_ci
+  sql: CASE WHEN COALESCE(yosa, yosi) IS NULL THEN NULL ELSE CAST(COALESCE(yosa,0)+COALESCE(yosi,0) AS DOUBLE) END
+  uses:
+  - yosa
+  - yosi
+  not_approved: []
+  note: Sums second-job income for employees and the self-employed, treating a missing component as zero. The result
+    is NULL when both are missing.
+  assumptions: ''
+  written_by: model
+- target_var: ylm_ci
+  sql: CASE WHEN COALESCE(y0101,y0301,y0302,y0303,y0304,y0305,y0306,y0401,y0402,y0403,y0404,y0701,y1101,yosa,yosi)
+    IS NULL THEN NULL ELSE CAST(COALESCE(y0101,0)+COALESCE(y0301,0)+COALESCE(y0302,0)+COALESCE(y0303,0)+COALESCE(y0304,0)+COALESCE(y0305,0)+COALESCE(y0306,0)+COALESCE(y0401,0)+COALESCE(y0402,0)+COALESCE(y0403,0)+COALESCE(y0404,0)+COALESCE(y0701,0)+COALESCE(y1101,0)+COALESCE(yosa,0)+COALESCE(yosi,0)
+    AS DOUBLE) END
+  uses:
+  - y0101
+  - y0301
+  - y0302
+  - y0303
+  - y0304
+  - y0305
+  - y0306
+  - y0401
+  - y0402
+  - y0403
+  - y0404
+  - y0701
+  - y1101
+  - yosa
+  - yosi
+  not_approved: []
+  note: Sums monetary labor income across main-job salary and extras, bonuses, self-employed cash income, FNR/unemployed/inactive
+    labor income, and second-job income. Missing components count as zero, and the result is NULL when all are missing.
+  assumptions: y0901 (annual sales) is excluded because it is a sales figure, not income. The bonus items y0401-y0404
+    are included as monetary income.
+  written_by: model
+- target_var: ylnm_ci
+  sql: CASE WHEN COALESCE(y0501,y0502,y0503,y0504,y0505,y0506,y0507,y0508,y0509,y0510,y0511,y0512,y0801,yac2) IS
+    NULL THEN NULL ELSE COALESCE(y0501,0)+COALESCE(y0502,0)+COALESCE(y0503,0)+COALESCE(y0504,0)+COALESCE(y0505,0)+COALESCE(y0506,0)+COALESCE(y0507,0)+COALESCE(y0508,0)+COALESCE(y0509,0)+COALESCE(y0510,0)+COALESCE(y0511,0)+COALESCE(y0512,0)+COALESCE(y0801,0)+COALESCE(yac2,0)
+    END
+  uses:
+  - y0501
+  - y0502
+  - y0503
+  - y0504
+  - y0505
+  - y0506
+  - y0507
+  - y0508
+  - y0509
+  - y0510
+  - y0511
+  - y0512
+  - y0801
+  - yac2
+  not_approved: []
+  note: Sums in-kind payments to employees (main job), in-kind income of the self-employed, and consumption of own
+    agricultural products. Missing components count as zero, and the result is NULL if all are missing.
+  assumptions: Assumes all listed in-kind variables are monthly values in the same currency units and that they
+    belong in non-monetary labor income.
+  written_by: model
+- target_var: ynlm_ci
+  sql: CASE WHEN yautcor IS NULL AND ysub IS NULL THEN NULL ELSE GREATEST(0, COALESCE(yautcor,0) - COALESCE(ytrabajocor,0)
+    + COALESCE(ysub,0)) END
+  uses:
+  - yautcor
+  - ytrabajocor
+  - ysub
+  not_approved: []
+  note: Non-labor income is corrected autonomous income minus corrected labor income, plus monetary subsidies. Missing
+    components count as zero, the result is NULL when both yautcor and ysub are missing, and it is floored at 0.
+  assumptions: I used the yautcor/ytrabajocor/ysub set because the alternative component list omits items such as
+    pensions and would understate non-labor income. Flooring at 0 hides small negative differences between yautcor
+    and ytrabajocor. It is assumed that ysub is not already included in yautcor.
+  written_by: model, second attempt after a failed check
+  previous_sql: CASE WHEN yautcor IS NULL AND ysub IS NULL THEN NULL ELSE (CASE WHEN yautcor IS NULL THEN 0 ELSE
+    yautcor - COALESCE(ytrabajocor,0) END) + COALESCE(ysub,0) END
+  fixed_because: The result has negative values (minimum -1), which an income cannot be. Floor the result at 0.
+- target_var: ypen_ci
+  sql: CASE WHEN COALESCE(y2803,yinv02,ymon02,yorf,yotp) IS NULL THEN NULL ELSE COALESCE(y2803,0)+COALESCE(yinv02,0)+COALESCE(ymon02,0)+COALESCE(yorf,0)+COALESCE(yotp,0)
+    END
+  uses:
+  - y2803
+  - yinv02
+  - ymon02
+  - yorf
+  - yotp
+  not_approved: []
+  note: Uses the alternative set because the approved y28_1* variables are only yes/no flags with no amounts. Sums
+    old-age, disability, survivor, orphan and other pensions, and leaves out special reparation-law pensions (yesp),
+    which are not contributory.
+  assumptions: y2803 may include non-contributory pensions such as PBS or PGU, which cannot be separated here. Including
+    yotp (other pensions) is a judgment call, since it may not be contributory.
+  written_by: model
+- target_var: remesas_ci
+  sql: yfa2
+  uses:
+  - yfa2
+  not_approved: []
+  note: Money received from relatives outside the household living abroad, taken directly.
+  assumptions: ''
+  written_by: model
+- target_var: rentaimp_ch
+  sql: yaimh
+  uses:
+  - yaimh
+  not_approved: []
+  note: Household imputed rent, taken directly and repeated on each person row of the household.
+  assumptions: ''
+  written_by: model
+- target_var: lp_ci
+  sql: lp
+  uses:
+  - lp
+  not_approved: []
+  note: Official poverty line taken directly from the raw variable.
+  assumptions: ''
+  written_by: model
+- target_var: lpe_ci
+  sql: CAST(li AS DOUBLE)
+  uses:
+  - li
+  not_approved: []
+  note: Returns the raw 'Linea de indigencia' (extreme poverty line) as a float. Missing stays NULL.
+  assumptions: Assumes li is already the official extreme poverty line in the units the target expects (monthly
+    per capita, local currency).
+  written_by: model
+- target_var: asiste_ci
+  sql: CASE WHEN asiste = 1 THEN 1 WHEN asiste = 2 THEN 0 WHEN asiste IS NULL AND e3 = 1 THEN 1 WHEN asiste IS NULL
+    AND e3 = 2 THEN 0 ELSE NULL END
+  uses:
+  - asiste
+  - e3
+  not_approved: []
+  note: Maps asiste (1=yes, 2=no) to 1/0. If asiste is missing it falls back to e3, which has the same coding.
+  assumptions: The two variables are treated as equivalent measures of current attendance, with asiste taking priority.
+  written_by: model
+- target_var: aedu_ci
+  sql: CASE WHEN e6a IS NULL THEN NULL WHEN e6a BETWEEN 1 AND 5 THEN 0 WHEN e6a NOT BETWEEN 6 AND 15 THEN NULL WHEN
+    e6b IS NULL OR e6b < 0 THEN NULL ELSE LEAST(30, GREATEST(0, (CASE WHEN e6a IN (6,7) THEN 0 WHEN e6a IN (8,10)
+    THEN 6 WHEN e6a IN (9,11) THEN 8 WHEN e6a IN (12,13) THEN 12 WHEN e6a = 14 THEN 17 WHEN e6a = 15 THEN 19 END)
+    + e6b - CASE WHEN e3 = 1 THEN 1 ELSE 0 END)) END
+  uses:
+  - e6a
+  - e6b
+  - e3
+  not_approved: []
+  note: 'Builds years completed from the level (e6a) and course (e6b). Levels 1-5 (never attended, preschool, special
+    education) give 0. Each level adds a base number of years: basic 0, old humanities/technical 6, media 8, higher
+    technical/professional 12, master''s 17, doctorate 19. If the person is currently attending (e3=1), the current
+    course is not yet completed, so 1 is subtracted. The result is capped to 0-30, and NULL is returned when e6b
+    is missing or -88.'
+  assumptions: I used the raw set rather than esc because esc only covers ages 15 and over. The base years for master's
+    (17) and doctorate (19) and the old-system bases (6) are my assumptions. e6b is assumed to hold the course number
+    1..n. A missing e3 is treated as not attending.
+  written_by: model
+- target_var: edupub_ci
+  sql: CASE WHEN asiste IS NULL OR asiste <> 1 THEN NULL WHEN e9depen > 0 THEN CASE WHEN e9depen IN (1,5,6,7,8,12)
+    THEN 1 ELSE 0 END WHEN depen > 0 THEN CASE WHEN depen IN (1,5,6,7,8,12) THEN 1 ELSE 0 END WHEN e10 > 0 THEN
+    CASE WHEN e10 IN (1,5,6,12) THEN 1 ELSE 0 END ELSE NULL END
+  uses:
+  - asiste
+  - e9depen
+  - depen
+  - e10
+  not_approved: []
+  note: The result is NULL unless the person currently attends (asiste=1). For attendees it is 1 for public institutions
+    (municipal, local education service, Junji, Integra, state universities, state CFT) and 0 otherwise. It uses
+    e9depen first, then depen, then e10, and gives NULL when none has a valid value.
+  assumptions: 'Junji and Integra are classed as public. Corporación de Administración Delegada (4) is classed as
+    private. Please check both choices. The e10 fallback uses its own code list: 1, 5, 6 and 12 count as public.'
+  written_by: model, second attempt after a failed check
+  previous_sql: CASE WHEN asiste = 2 THEN 0 WHEN asiste = 1 THEN CASE WHEN COALESCE(NULLIF(e9depen,-66), NULLIF(depen,-66))
+    > 0 THEN CASE WHEN COALESCE(NULLIF(e9depen,-66), NULLIF(depen,-66)) IN (1,5,6,8,12) THEN 1 ELSE 0 END WHEN e10
+    > 0 THEN CASE WHEN e10 IN (1,5,12) THEN 1 ELSE 0 END ELSE NULL END ELSE NULL END
+  fixed_because: People who do not attend school came out as 0, so the variable had a value for everyone. It must
+    be missing (NULL) for anyone not currently attending.
+- target_var: aguared_ch
+  sql: CASE WHEN v20 = 1 THEN 1 WHEN v20 IN (4,5,6,7) THEN 0 ELSE NULL END
+  uses:
+  - v20
+  not_approved: []
+  note: Gives 1 when household water comes from the public network (v20=1) and 0 for wells, rivers, tanker trucks
+    or other sources. NULL if v20 is missing.
+  assumptions: Piped access is taken as public-network supply; v22 (distribution system) is deliberately not used,
+    so households on the public network who carry water by hand still count as 1.
+  written_by: model
+- target_var: aguafuente_ch
+  sql: 'NULL'
+  uses: []
+  not_approved: []
+  note: 'Not computed: the target has no category codes, and v20/v21 alone cannot separate the usual categories
+    (piped inside vs. outside the dwelling, protected vs. unprotected wells or springs).'
+  assumptions: A mapping would require inventing a code scheme; the reviewer should supply the target codes, and
+    v22 would be needed for inside/outside the dwelling.
+  written_by: model
+- target_var: bano_ch
+  sql: 'NULL'
+  uses: []
+  not_approved: []
+  note: Not computed. No target code list is given for bano_ch, so the mapping of v23, v23_sistema and v23_cajon
+    onto target categories (sewer, septic tank, latrine, other, none) cannot be fixed faithfully.
+  assumptions: A reviewer needs to supply the target categories. The raw variables are sufficient once the codes
+    are known.
+  written_by: model
+- target_var: piso_ch
+  sql: 'NULL'
+  uses: []
+  not_approved: []
+  note: Not computed. No target codes are provided for floor material, so v4 cannot be recoded without guessing
+    the categories.
+  assumptions: A reviewer needs to supply the target category list before v4 can be mapped.
+  written_by: model
+- target_var: pared_ch
+  sql: 'NULL'
+  uses: []
+  not_approved: []
+  note: Not computed. No target codes are provided for wall material, so v2 cannot be recoded without guessing the
+    categories.
+  assumptions: A reviewer needs to supply the target category list before v2 can be mapped.
+  written_by: model
+- target_var: techo_ch
+  sql: 'NULL'
+  uses: []
+  not_approved: []
+  note: Not computed. No target codes are provided for roof material, so v6 cannot be recoded without guessing the
+    categories.
+  assumptions: A reviewer needs to supply the target category list before v6 can be mapped.
+  written_by: model
+- target_var: dorm_ch
+  sql: CASE WHEN v29a >= 0 THEN v29a WHEN v27a >= 0 THEN v27a ELSE NULL END
+  uses:
+  - v29a
+  - v27a
+  not_approved: []
+  note: Uses the bedrooms of the household (v29a) when it has a valid value and otherwise falls back to the dwelling's
+    bedrooms (v27a). Values of -88 (does not know) or missing in both give NULL.
+  assumptions: A v29a of -88 also falls back to v27a. Where the household shares the dwelling, v27a is only used
+    when v29a is missing.
+  written_by: model, second attempt after a failed check
+  previous_sql: CASE WHEN v29a BETWEEN 0 AND 30 THEN v29a ELSE NULL END
+  fixed_because: The expression used v29a alone and 96% of rows came out missing. v29a is only asked of households
+    that share a dwelling. Use v29a where it has a value and v27a otherwise. -88 means does not know.
+- target_var: viviprop_ch
+  sql: CASE WHEN v13 = 1 THEN 1 WHEN v13 = 2 THEN 0 WHEN v13 IN (3, 9, 10, 11) THEN 3 ELSE NULL END
+  uses:
+  - v13
+  not_approved: []
+  note: Owned (1) maps to 1 and rented (2) maps to 0. Cedida, usufructo, irregular occupation and irregular possession
+    map to 3, occupied de facto. Anything else is NULL.
+  assumptions: Cedida (3) and usufructo (9) are placed in the 'occupied_de_facto' bucket because the target has
+    only three codes. v13_propia is not used, since owned is 1 whether or not it is paid off.
+  written_by: model
+- target_var: internet_ch
+  sql: CASE WHEN r17a = 1 OR r17b = 1 OR r17c = 1 OR r17d = 1 OR r17e = 1 THEN 1 WHEN r17a = 2 AND r17b = 2 AND
+    r17c = 2 AND r17d = 2 AND r17e = 2 THEN 0 ELSE NULL END
+  uses:
+  - r17a
+  - r17b
+  - r17c
+  - r17d
+  - r17e
+  not_approved: []
+  note: Returns 1 if any of the five internet access types in the dwelling is reported as yes, 0 if all five are
+    reported as no, and NULL otherwise (some missing and none yes).
+  assumptions: Any access type (including mobile phone or tablet) counts as a household internet connection. If
+    at least one type is yes the result is 1 even when others are missing; if none are yes and any is missing the
+    result is NULL.
+  written_by: model
+- target_var: auto_ch
+  sql: CASE WHEN r14 = 1 THEN 1 WHEN r14 = 2 THEN 0 ELSE NULL END
+  uses:
+  - r14
+  not_approved: []
+  note: 'Maps r14 directly: 1 (yes) to 1, 2 (no) to 0, anything else to NULL.'
+  assumptions: The raw item covers any vehicle for work or personal use, not strictly a car; it is treated as car
+    ownership.
+  written_by: model

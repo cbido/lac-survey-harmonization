@@ -1,0 +1,67 @@
+# Official sources for every file the pipeline uses. Nothing here is committed to the
+# repository: scripts/download_data.py fetches each file into data/ and checks its hash.
+#
+# access:
+#   open     direct download, no registration
+#   account  requires a registered account on the office's microdata catalog
+# Files marked account are downloaded by hand and placed at `path`.
+
+CHL:
+  base: https://observatorio.ministeriodesarrollosocial.gob.cl/storage/docs/casen
+  page: https://observatorio.ministeriodesarrollosocial.gob.cl/encuesta-casen
+
+BOL:
+  base: https://anda.ine.gob.bo/index.php
+  page: https://www.ine.gob.bo/index.php/censos-y-banco-de-datos/censos/bases-de-datos-encuestas-sociales/
+
+CRI:
+  base: https://sistemas.inec.cr/pad5/index.php
+  page: https://sistemas.inec.cr/pad5/index.php/catalog
+
+files:
+  # ---- Chile, Casen (original releases, the ones the IDB programs were written for) ----
+  # File names with spaces are written with '+': the ministry's server rejects the %20 form.
+  - {survey: CHL_2015, kind: microdata,     access: open, url: "{CHL}/2015/casen_2015_stata.rar", path: data/raw/CHL_2015/casen_2015_stata.rar}
+  - {survey: CHL_2015, kind: comuna,        access: open, url: "{CHL}/2015/casen_2015_provincia_comuna.dta.zip", path: data/raw/CHL_2015/casen_2015_provincia_comuna.dta.zip}
+  - {survey: CHL_2015, kind: questionnaire, access: open, url: "{CHL}/2015/Cuestionario_CASEN_2015.pdf", path: data/questionnaires/CHL_2015/Cuestionario_CASEN_2015.pdf}
+  - {survey: CHL_2015, kind: codebook,      access: open, url: "{CHL}/2015/Libro_de_Codigos_Casen_2015.pdf", path: data/questionnaires/CHL_2015/Libro_de_Codigos_Casen_2015.pdf}
+
+  - {survey: CHL_2017, kind: microdata,     access: open, url: "{CHL}/2017/casen_2017_stata.rar", path: data/raw/CHL_2017/casen_2017_stata.rar}
+  - {survey: CHL_2017, kind: comuna,        access: open, url: "{CHL}/2017/casen_2017_provincia_comuna.dta.zip", path: data/raw/CHL_2017/casen_2017_provincia_comuna.dta.zip}
+  - {survey: CHL_2017, kind: questionnaire, access: open, url: "{CHL}/2017/Cuestionario_Casen2017.pdf", path: data/questionnaires/CHL_2017/Cuestionario_Casen2017.pdf}
+  - {survey: CHL_2017, kind: codebook,      access: open, url: "{CHL}/2017/Libro_de_Codigos_Casen_2017.pdf", path: data/questionnaires/CHL_2017/Libro_de_Codigos_Casen_2017.pdf}
+
+  - {survey: CHL_2020, kind: microdata,     access: open, url: "{CHL}/2020/Casen_en_Pandemia_2020_STATA_revisada2022_09.dta.zip", path: data/raw/CHL_2020/Casen_en_Pandemia_2020_STATA_revisada2022_09.dta.zip}
+  - {survey: CHL_2020, kind: comuna,        access: open, url: "{CHL}/2020/casen_en_pandemia_2020_provincia_comuna.dta.zip", path: data/raw/CHL_2020/casen_en_pandemia_2020_provincia_comuna.dta.zip}
+  - {survey: CHL_2020, kind: questionnaire, access: open, url: "{CHL}/2020/Cuestionario_Casen_En_Pandemia_2020.pdf", path: data/questionnaires/CHL_2020/Cuestionario_Casen_En_Pandemia_2020.pdf}
+  - {survey: CHL_2020, kind: codebook,      access: open, url: "{CHL}/2020/Libro_de_codigos_Base_de_Datos_Casen_en_Pandemia_2020.pdf", path: data/questionnaires/CHL_2020/Libro_de_codigos_Base_de_Datos_Casen_en_Pandemia_2020.pdf}
+
+  - {survey: CHL_2022, kind: microdata,     access: open, url: "{CHL}/2022/Base+de+datos+Casen+2022+STATA_18+marzo+2024.dta.zip", path: data/raw/CHL_2022/Base_de_datos_Casen_2022_STATA_18_marzo_2024.dta.zip}
+  - {survey: CHL_2022, kind: comuna,        access: open, url: "{CHL}/2022/casen_2022_provincia_comuna.dta", path: data/raw/CHL_2022/casen_2022_provincia_comuna.dta}
+  - {survey: CHL_2022, kind: questionnaire, access: open, url: "{CHL}/2022/Cuestionario+Casen+2022.pdf", path: data/questionnaires/CHL_2022/Cuestionario_Casen_2022.pdf}
+  - {survey: CHL_2022, kind: codebook,      access: open, url: "{CHL}/2022/Libro_de_codigos_Base_de_datos_Casen_2022(18marzo2024).xlsx", path: data/questionnaires/CHL_2022/Libro_de_codigos_Base_de_datos_Casen_2022_18marzo2024.xlsx}
+
+  # Official comuna-level poverty estimates (small-area estimates published by the ministry)
+  - {survey: CHL_2022, kind: official_estimates, access: open, url: "https://observatorio.ministeriodesarrollosocial.gob.cl/storage/docs/pobreza-comunal/2022/Estimaciones_Tasa_Pobreza_Ingresos_Comunas_2022.xlsx", path: data/aux/Estimaciones_Tasa_Pobreza_Ingresos_Comunas_2022.xlsx}
+  - {survey: CHL_2022, kind: official_estimates, access: open, url: "https://observatorio.ministeriodesarrollosocial.gob.cl/storage/docs/pobreza-comunal/2020/Estimaciones_de_Tasa_de_Pobreza_por_Ingresos_por_Comunas_2020_revisada2022_09.xlsx", path: data/aux/Estimaciones_Tasa_Pobreza_Ingresos_Comunas_2020.xlsx}
+
+  # ---- Bolivia, Encuesta de Hogares ----
+  - {survey: BOL_2017, kind: metadata,      access: open, url: "{BOL}/metadata/export/55/ddi", path: data/metadata/BOL_2017_ddi.xml}
+  - {survey: BOL_2017, kind: questionnaire, access: open, url: "{BOL}/catalog/55/download/555", path: data/questionnaires/BOL_2017/Cuestionario_EH-2017.pdf}
+  # INE's own download form only records the request and then opens the ANDA page below.
+  - {survey: BOL_2017, kind: microdata,     access: account, url: "{BOL}/catalog/55/get-microdata", path: data/raw/BOL_2017/}
+  - {survey: BOL_2021, kind: metadata,      access: open, url: "{BOL}/metadata/export/93/ddi", path: data/metadata/BOL_2021_ddi.xml}
+  - {survey: BOL_2021, kind: questionnaire, access: open, url: "{BOL}/catalog/93/download/956", path: data/questionnaires/BOL_2021/Cuestionario_EH2021.pdf}
+  - {survey: BOL_2021, kind: microdata,     access: account, url: "{BOL}/catalog/93/get-microdata", path: data/raw/BOL_2021/}
+
+  # ---- Costa Rica, ENAHO ----
+  - {survey: CRI_2017, kind: metadata,      access: open, url: "{CRI}/metadata/export/181/ddi", path: data/metadata/CRI_2017_ddi.xml}
+  - {survey: CRI_2017, kind: questionnaire, access: open, url: "{CRI}/catalog/181/download/1928", path: data/questionnaires/CRI_2017/Cuestionario_Hogar_Enaho2017.pdf}
+  - {survey: CRI_2017, kind: questionnaire, access: open, url: "{CRI}/catalog/181/download/1929", path: data/questionnaires/CRI_2017/Cuestionario_Individual_Enaho2017.pdf}
+  - {survey: CRI_2017, kind: codebook,      access: open, url: "{CRI}/catalog/181/download/1936", path: data/questionnaires/CRI_2017/Creacion_de_Variables_Enaho2017.pdf}
+  - {survey: CRI_2017, kind: microdata,     access: account, url: "{CRI}/catalog/181/get-microdata", path: data/raw/CRI_2017/}
+  - {survey: CRI_2022, kind: metadata,      access: open, url: "{CRI}/metadata/export/295/ddi", path: data/metadata/CRI_2022_ddi.xml}
+  - {survey: CRI_2022, kind: questionnaire, access: open, url: "{CRI}/catalog/295/download/4647", path: data/questionnaires/CRI_2022/ENAHO-2022_CuestionarioHogar.pdf}
+  - {survey: CRI_2022, kind: questionnaire, access: open, url: "{CRI}/catalog/295/download/4648", path: data/questionnaires/CRI_2022/ENAHO-2022_CuestionarioIndividual.pdf}
+  - {survey: CRI_2022, kind: codebook,      access: open, url: "{CRI}/catalog/295/download/4655", path: data/questionnaires/CRI_2022/ENAHO-2022_CreacionDeVariables.pdf}
+  - {survey: CRI_2022, kind: microdata,     access: account, url: "{CRI}/catalog/295/get-microdata", path: data/raw/CRI_2022/}

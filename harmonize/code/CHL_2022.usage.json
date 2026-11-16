@@ -1,0 +1,7 @@
+{
+  "model": "claude-sonnet-5-5",
+  "calls": 10,
+  "input": 20383,
+  "output": 22069,
+  "note": "9 calls for the first pass and 1 for the second attempt on four variables"
+}

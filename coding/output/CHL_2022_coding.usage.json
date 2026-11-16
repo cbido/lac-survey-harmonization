@@ -1,0 +1,199 @@
+{
+  "model": "claude-sonnet-5-5",
+  "n_calls": 31,
+  "totals": {
+    "input": 98317,
+    "cache_write": 17172,
+    "cache_read": 515160,
+    "output": 67192
+  },
+  "calls": [
+    {
+      "input": 3170,
+      "cache_write": 17172,
+      "cache_read": 0,
+      "output": 2153
+    },
+    {
+      "input": 3060,
+      "cache_write": 0,
+      "cache_read": 17172,
+      "output": 2148
+    },
+    {
+      "input": 2993,
+      "cache_write": 0,
+      "cache_read": 17172,
+      "output": 2149
+    },
+    {
+      "input": 3057,
+      "cache_write": 0,
+      "cache_read": 17172,
+      "output": 2153
+    },
+    {
+      "input": 3247,
+      "cache_write": 0,
+      "cache_read": 17172,
+      "output": 2152
+    },
+    {
+      "input": 3115,
+      "cache_write": 0,
+      "cache_read": 17172,
+      "output": 2151
+    },
+    {
+      "input": 3025,
+      "cache_write": 0,
+      "cache_read": 17172,
+      "output": 2152
+    },
+    {
+      "input": 3251,
+      "cache_write": 0,
+      "cache_read": 17172,
+      "output": 2152
+    },
+    {
+      "input": 3097,
+      "cache_write": 0,
+      "cache_read": 17172,
+      "output": 2147
+    },
+    {
+      "input": 3043,
+      "cache_write": 0,
+      "cache_read": 17172,
+      "output": 2148
+    },
+    {
+      "input": 3106,
+      "cache_write": 0,
+      "cache_read": 17172,
+      "output": 2153
+    },
+    {
+      "input": 3355,
+      "cache_write": 0,
+      "cache_read": 17172,
+      "output": 2151
+    },
+    {
+      "input": 3288,
+      "cache_write": 0,
+      "cache_read": 17172,
+      "output": 2155
+    },
+    {
+      "input": 3033,
+      "cache_write": 0,
+      "cache_read": 17172,
+      "output": 2152
+    },
+    {
+      "input": 3276,
+      "cache_write": 0,
+      "cache_read": 17172,
+      "output": 2149
+    },
+    {
+      "input": 3186,
+      "cache_write": 0,
+      "cache_read": 17172,
+      "output": 2152
+    },
+    {
+      "input": 3142,
+      "cache_write": 0,
+      "cache_read": 17172,
+      "output": 2153
+    },
+    {
+      "input": 3202,
+      "cache_write": 0,
+      "cache_read": 17172,
+      "output": 2150
+    },
+    {
+      "input": 3227,
+      "cache_write": 0,
+      "cache_read": 17172,
+      "output": 2154
+    },
+    {
+      "input": 3183,
+      "cache_write": 0,
+      "cache_read": 17172,
+      "output": 2157
+    },
+    {
+      "input": 2996,
+      "cache_write": 0,
+      "cache_read": 17172,
+      "output": 2154
+    },
+    {
+      "input": 3152,
+      "cache_write": 0,
+      "cache_read": 17172,
+      "output": 2197
+    },
+    {
+      "input": 3159,
+      "cache_write": 0,
+      "cache_read": 17172,
+      "output": 2200
+    },
+    {
+      "input": 3111,
+      "cache_write": 0,
+      "cache_read": 17172,
+      "output": 2204
+    },
+    {
+      "input": 3203,
+      "cache_write": 0,
+      "cache_read": 17172,
+      "output": 2198
+    },
+    {
+      "input": 3386,
+      "cache_write": 0,
+      "cache_read": 17172,
+      "output": 2201
+    },
+    {
+      "input": 3136,
+      "cache_write": 0,
+      "cache_read": 17172,
+      "output": 2201
+    },
+    {
+      "input": 3055,
+      "cache_write": 0,
+      "cache_read": 17172,
+      "output": 2203
+    },
+    {
+      "input": 3434,
+      "cache_write": 0,
+      "cache_read": 17172,
+      "output": 2202
+    },
+    {
+      "input": 3297,
+      "cache_write": 0,
+      "cache_read": 17172,
+      "output": 2202
+    },
+    {
+      "input": 3332,
+      "cache_write": 0,
+      "cache_read": 17172,
+      "output": 2199
+    }
+  ],
+  "note": "The first call is a 50-case trial run that wrote the prompt cache; its answers were discarded."
+}
