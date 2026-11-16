@@ -1,0 +1,150 @@
+﻿survey,target_var,target_description,domain,disagreement,reference_status,reference_vars,reference_labels,model_status,model_vars,model_labels,model_confidence,model_rationale,decision,final_source_vars,note
+CHL_2020,afroind_ci,Self-identified race or ethnicity,demographics,model adds variables,mapped,r3,"r3: r3. En Chile, la ley reconoce diez pueblos indígenas, ¿[NOMBRE] pertenece?",mapped,etnia;r3,"etnia: Etnia
+r3: r3. En Chile, la ley reconoce diez pueblos indígenas, ¿[NOMBRE] pertenece?",0.8,"r3 and the derived etnia identify indigenous peoples, while no afro-descendant category is collected, so the rest map to other.",,,
+CHL_2020,condocup_ci,Labor force status,labor,partly different variables,mapped,edad;o1;o2;o3;o6,"edad: Edad
+o1: o1. La semana pasada, ¿trabajó al menos una hora?
+o2: o2. Aunque no trabajó la semana pasada, ¿realizó alguna actividad?
+o3: o3. Aunque no trabajó, ¿tenía algún empleo del cual estuvo ausente temporalmente
+o6: o6. ¿Buscó trabajo remunerado o cuenta propia en las últimas cuatro semanas?",mapped,activ;edad,"activ: Condición de actividad
+edad: Edad",0.85,"activ gives employed/unemployed/inactive, and edad is needed to assign below working age to those under the minimum age.",,,
+CHL_2020,horaspri_ci,Weekly hours worked in main job,labor,"reference: maps it, model: not available",mapped,y2_hrs,y2_hrs: y2_hrs. Número de horas mensuales pactadas con empleador,not_available,,,0.6,"The dictionary only has agreed monthly days/hours with the employer (y2_dias, y2_hrs), not usual or actual weekly hours worked, so weekly hours cannot be built reliably.",,,
+CHL_2020,ocupa_ci,Occupation group in main job (9 IDB groups),labor,different variables,mapped,oficio4_88,oficio4_88: oficio4_88. Oficio (4 dígitos) CIUO 88,mapped,activ;oficio1_08;oficio4_08,"activ: Condición de actividad
+oficio1_08: oficio1_08. Oficio (1 dígito) CIUO 08
+oficio4_08: oficio4_08. Oficio (4 dígitos) CIUO 08",0.8,"Main-job occupation is given by CIUO-08 1-digit/4-digit codes (oficio1_08, oficio4_08), which can be recoded to the 9 IDB groups, restricted to the employed (activ).",,,
+CHL_2020,rama_ci,Industry in main job (9 IDB groups),labor,model adds variables,mapped,rama4,rama4: rama4. Rama (4 dígitos) CIIU Rev. 4,mapped,activ;rama1;rama4,"activ: Condición de actividad
+rama1: rama1. Rama (1 dígito) CIIU Rev. 4
+rama4: rama4. Rama (4 dígitos) CIIU Rev. 4",0.75,Industry of main job is in CIIU Rev.4 (rama1/rama4) and must be regrouped to IDB's industry categories for the employed.,,,
+CHL_2020,ylmpri_ci,"Monetary labor income, main job",income,model adds variables,mapped,yoprcor,yoprcor: Ingreso Ocupación Principal corregido,mapped,y0101;y0101c;y0301;y0302;y0303;y0304;y0305;y0306;y0401;y0402;y0403;y0404;y0701;y0701c;yoprcor,"y0101: Asalariados principal - Sueldos y salarios monetario
+y0101c: Asalariados principal - Sueldos y salarios monetario corregido
+y0301: Asalariados principal - Horas extras
+y0302: Asalariados principal - Comisiones
+y0303: Asalariados principal - Propinas
+y0304: Asalariados principal - Asignación por vivienda, transporte, educación
+y0305: Asalariados principal - Viáticos no sujetos a rendición
+y0306: Asalariados principal - Otros ingresos monetarios
+y0401: Asalariados principal - Bonificaciones o aguinaldos
+y0402: Asalariados principal - Gratificaciones
+y0403: Asalariados principal - Décimo tercer mes o meses adicionales
+y0404: Asalariados principal - Otros similares monetarios
+y0701: Independientes principal - Efectivo
+y0701c: Independientes principal - Efectivo corregido
+yoprcor: Ingreso Ocupación Principal corregido",0.6,"Monetary income of the main job is the sum of salary, extras and bonuses for employees (y0101..y0404) or independent cash income (y0701), with corrected versions y0101c/y0701c or the aggregate yoprcor as alternatives.",,,
+CHL_2020,ylnmpri_ci,"Non-monetary labor income, main job",income,"reference: not available, model: maps it",not_available,,,mapped,y0501;y0502;y0503;y0504;y0505;y0506;y0507;y0508;y0509;y0510;y0511;y0512;y0801,"y0501: Asalariados principal - Alimentos y bebidas
+y0502: Asalariados principal - Vales de alimentación
+y0503: Asalariados principal - Vivienda o alojamiento
+y0504: Asalariados principal - Vehículo para uso privado
+y0505: Asalariados principal - Servicio de transporte
+y0506: Asalariados principal - Estacionamiento gratuito
+y0507: Asalariados principal - Teléfono
+y0508: Asalariados principal - Vestimenta
+y0509: Asalariados principal - Servicios de guardería o sala cuna
+y0510: Asalariados principal - Leña
+y0511: Asalariados principal - Bienes o servicios del empleador
+y0512: Asalariados principal - Otros similares en especies
+y0801: Independientes principal - Especies",0.7,Non-monetary income in main job comes from in-kind payments to employees (y0501-y0512) plus in-kind withdrawals by the self-employed (y0801).,,,
+CHL_2020,ylmsec_ci,"Monetary labor income, second job",income,different variables,mapped,yoprcor;ytrabajocor,"yoprcor: Ingreso Ocupación Principal corregido
+ytrabajocor: Ingreso del trabajo corregido",mapped,yosa;yosi,"yosa: Ingresos de la ocupación secundaria - Asalariados
+yosi: Ingresos de la ocupación secundaria - Independientes",0.8,Secondary occupation income for employees (yosa) and self-employed (yosi) gives monetary income from the second job.,,,
+CHL_2020,ylm_ci,Total monetary labor income,income,different variables,mapped,ytrabajocor,ytrabajocor: Ingreso del trabajo corregido,mapped,y0101;y0301;y0302;y0303;y0304;y0305;y0306;y0401;y0402;y0403;y0404;y0701;yosa;yosi,"y0101: Asalariados principal - Sueldos y salarios monetario
+y0301: Asalariados principal - Horas extras
+y0302: Asalariados principal - Comisiones
+y0303: Asalariados principal - Propinas
+y0304: Asalariados principal - Asignación por vivienda, transporte, educación
+y0305: Asalariados principal - Viáticos no sujetos a rendición
+y0306: Asalariados principal - Otros ingresos monetarios
+y0401: Asalariados principal - Bonificaciones o aguinaldos
+y0402: Asalariados principal - Gratificaciones
+y0403: Asalariados principal - Décimo tercer mes o meses adicionales
+y0404: Asalariados principal - Otros similares monetarios
+y0701: Independientes principal - Efectivo
+yosa: Ingresos de la ocupación secundaria - Asalariados
+yosi: Ingresos de la ocupación secundaria - Independientes",0.65,"Total monetary labor income sums main-job wages, additional monetary payments, self-employed cash income and secondary job income (alternatively corrected series y0101c, y0701c).",,,
+CHL_2020,ylnm_ci,Total non-monetary labor income,income,"reference: not available, model: maps it",not_available,,,mapped,y0501;y0502;y0503;y0504;y0505;y0506;y0507;y0508;y0509;y0510;y0511;y0512;y0801,"y0501: Asalariados principal - Alimentos y bebidas
+y0502: Asalariados principal - Vales de alimentación
+y0503: Asalariados principal - Vivienda o alojamiento
+y0504: Asalariados principal - Vehículo para uso privado
+y0505: Asalariados principal - Servicio de transporte
+y0506: Asalariados principal - Estacionamiento gratuito
+y0507: Asalariados principal - Teléfono
+y0508: Asalariados principal - Vestimenta
+y0509: Asalariados principal - Servicios de guardería o sala cuna
+y0510: Asalariados principal - Leña
+y0511: Asalariados principal - Bienes o servicios del empleador
+y0512: Asalariados principal - Otros similares en especies
+y0801: Independientes principal - Especies",0.6,Total non-monetary labor income is the sum of in-kind income components from employee and self-employed work.,,,
+CHL_2020,ynlm_ci,Total monetary non-labor income,income,partly different variables,mapped,yautcor;ysub;ytrabajocor,"yautcor: Ingreso autónomo corregido
+ysub: Subsidios monetarios
+ytrabajocor: Ingreso del trabajo corregido",mapped,y2801;y280202;y2803;y2804;yah1;yah2;yama;ydes;ydim;ydon;yesp;yfa1;yfa2;yfam;yids;yinv02;yinv03;ymes;ymon;yorf;yotp;yotr;yre1;yre2;yre3;yrut;ysub;yta1;yta2;ytro,"y2801: Pensión básica solidaria de vejez
+y280202: Aporte Previsional Solidario de Vejez
+y2803: Jubilación o pensión de vejez
+y2804: Pensión básica solidaria de invalidez
+yah1: Intereses por depósitos
+yah2: Dividendo por acciones o bonos financieros
+yama: Arriendo de maquinarias y animales
+ydes: Seguro de desempleo o cesantía
+ydim: Devolución de impuestos
+ydon: Donaciones
+yesp: Pensión por leyes especiales de reparación
+yfa1: Dinero de familiares ajenos al hogar - Del país
+yfa2: Dinero de familiares ajenos al hogar - Del extranjero
+yfam: Asignación familiar
+yids: Indemnizaciones por despido
+yinv02: Aporte Previsional Solidario de Invalidez
+yinv03: Jubilación o pensión de invalidez
+ymes: Pensión de alimentos
+ymon: Montepío o pensión de viudez
+yorf: Pensión de orfandad
+yotp: Otro tipo de pensión
+yotr: Otros ingresos
+yre1: Arriendos de propiedades urbanas
+yre2: Arriendos de propiedades agrícolas
+yre3: Arriendos de propiedades por temporadas
+yrut: Retiro de utilidades
+ysub: Subsidios monetarios
+yta1: Trabajos de antes - Asalariados
+yta2: Trabajos de antes - No asalariados
+ytro: Remuneración por trabajos ocasionales",0.55,"Monetary non-labor income aggregates rents, transfers, remittances, interest, subsidies and pensions; the composition requires judgment on what to include.",,,
+CHL_2020,rentaimp_ch,Imputed rent of owner-occupied housing,income,"reference: not available, model: maps it",not_available,,,mapped,yaimh,yaimh: Alquiler imputado,0.9,yaimh is the household imputed rent (alquiler imputado) variable.,,,
+CHL_2020,remesas_ci,Remittances received,income,"reference: not available, model: maps it",not_available,,,mapped,yfa1;yfa2,"yfa1: Dinero de familiares ajenos al hogar - Del país
+yfa2: Dinero de familiares ajenos al hogar - Del extranjero",0.6,"Money from relatives outside the household, from within the country (yfa1) and abroad (yfa2), is the closest match to remittances; the target may be limited to yfa2.",,,
+CHL_2020,asiste_ci,Currently attends school,education,model adds variables,mapped,e2,e2: e2. Participa en clases virtuales o presenciales impartidas por un est. educ.,mapped,asiste2;e2,"asiste2: Asiste a establecimiento educacional o participa en clases virtuales
+e2: e2. Participa en clases virtuales o presenciales impartidas por un est. educ.",0.85,"asiste2 is the derived attendance indicator (1=Asiste, 2=No asiste), which can be recoded to 0/1; e2 is the underlying question.",,,
+CHL_2020,aedu_ci,Years of schooling completed,education,partly different variables,mapped,e2;e6a;e6b,"e2: e2. Participa en clases virtuales o presenciales impartidas por un est. educ.
+e6a: e6.a. ¿Cuál es el nivel más alto alcanzado o el nivel educacional actual?
+e6b: e6b. En ese nivel ¿cuál fue el último curso que aprobó o que cursa actualmente?",mapped,e6a;e6b;educ;esc;esc2,"e6a: e6.a. ¿Cuál es el nivel más alto alcanzado o el nivel educacional actual?
+e6b: e6b. En ese nivel ¿cuál fue el último curso que aprobó o que cursa actualmente?
+educ: Nivel de escolaridad
+esc: Años de escolaridad truncada (edad >= 15)
+esc2: Años de escolaridad sin truncar (edad >= 15)",0.8,"esc2 (untruncated years of schooling, age>=15) and esc give years of education directly; e6a/e6b could be used to build it for those under 15.",,,
+CHL_2020,aguared_ch,Piped water access,housing,model adds variables,mapped,v20,v20: v20. ¿De dónde proviene el agua de la vivienda?,mapped,v20;v20_red;v22,"v20: v20. ¿De dónde proviene el agua de la vivienda?
+v20_red: v20_red. El medidor de la vivienda, ¿es propio, compartido o no tiene medidor?
+v22: v22. ¿Cuál es el sistema de distribución del agua en la vivienda?",0.85,"v20=1 (red pública) gives piped network water, refined by v20_red and v22 for access within the dwelling or site.",,,
+CHL_2020,aguafuente_ch,Main source of drinking water,housing,partly different variables,mapped,v20;v22,"v20: v20. ¿De dónde proviene el agua de la vivienda?
+v22: v22. ¿Cuál es el sistema de distribución del agua en la vivienda?",mapped,v20;v20_esp;v20_red,"v20: v20. ¿De dónde proviene el agua de la vivienda?
+v20_esp: v20. ¿De dónde proviene el agua de la vivienda?
+v20_red: v20_red. El medidor de la vivienda, ¿es propio, compartido o no tiene medidor?",0.9,"v20 records the origin of the dwelling's water (public network, well, river, tanker truck, other), which maps to main water source.",,,
+CHL_2020,viviprop_ch,Dwelling tenure,housing,model adds variables,mapped,v13;v13_propia,"v13: v13. Su hogar, ¿bajo qué situación ocupa la vivienda?
+v13_propia: v13_propia. ¿Esta vivienda es...?",mapped,v13;v13_arrendada;v13_cedida;v13_propia,"v13: v13. Su hogar, ¿bajo qué situación ocupa la vivienda?
+v13_arrendada: v13_arrendada. ¿Arrendada con o sin contrato?
+v13_cedida: v13_cedida. ¿Cedida por servicio o trabajo, familiar u otro?
+v13_propia: v13_propia. ¿Esta vivienda es...?",0.8,"v13 gives the tenure situation (1 owned, 2 rented, 3 ceded, 9-11 usufruct/irregular occupation), which can be recoded to rented/owned/occupied de facto, with the sub-questions refining the categories.",,,
+CHL_2020,lp_ci,Official national poverty line,income,"reference: not available, model: maps it",not_available,,,mapped,lp,lp: Línea de pobreza,0.9,lp is the official poverty line given in the survey.,,,
+CHL_2020,lpe_ci,Official national extreme poverty line,income,"reference: not available, model: maps it",not_available,,,mapped,li,li: Línea de indigencia,0.9,li is the official indigence (extreme poverty) line given in the survey.,,,
+CHL_2020,cotizando_ci,Currently contributing to social security,labor,model adds variables,mapped,o32,"o32: o32. ¿Cotizó durante el Mes pasado, en algún sistema previsional?",mapped,activ;o32,"activ: Condición de actividad
+o32: o32. ¿Cotizó durante el Mes pasado, en algún sistema previsional?",0.85,"o32 asks whether the person contributed to a pension system last month (codes 1-5 yes, 6 no), applicable to the employed.",,,
+CHL_2020,ypen_ci,Contributory pension income,income,different variables,mapped,y28_1a;y28_1b;y28_1c;y28_1d;y28_1e;y28_1f;y28_1g;y28_1h,"y28_1a: y28_1a. En [mes pasado][año], ¿recibió Pensión Básica Solidaria de Vejez?
+y28_1b: y28_1b. En [mes pasado][año], ¿recibió Jubilación de Vejez con APS?
+y28_1c: y28_1c. En [mes pasado][año], ¿recibió Jubilación o Pensión de Vejez?
+y28_1d: y28_1d. En [mes pasado][año], ¿Pensión Básica Solidaria de Invalidez?
+y28_1e: y28_1e. En [mes pasado][año], ¿recibió Jubilación de Invalidez con APS?
+y28_1f: y28_1f. En [mes pasado][año], ¿recibió Jubilación o Pensión de Invalidez?
+y28_1g: y28_1g. En [mes pasado][año], ¿recibió Montepío o Pensión de Viudez?
+y28_1h: y28_1h. En [mes pasado][año], ¿recibió Pensión de Orfandad?",mapped,y280201;y280202;y2803;yinv01;yinv02;yinv03;ymon;yorf,"y280201: Jubilación o pensión de vejez con APS
+y280202: Aporte Previsional Solidario de Vejez
+y2803: Jubilación o pensión de vejez
+yinv01: Jubilación o pensión de invalidez con APS
+yinv02: Aporte Previsional Solidario de Invalidez
+yinv03: Jubilación o pensión de invalidez
+ymon: Montepío o pensión de viudez
+yorf: Pensión de orfandad",0.6,"Contributory pensions include old-age and disability pensions (with and without APS), survivor and orphan pensions, excluding the non-contributory basic solidarity pensions.",,,
+CHL_2020,migrante_ci,International migrant,demographics,different variables,mapped,r1b,"r1b: r1b. Cuando [NOMBRE] nació, ¿en qué comuna o país vivía su madre?",mapped,inmigrante,inmigrante: Persona que no nació en Chile,0.85,"inmigrante flags persons not born in Chile, which proxies international migrant status.",,,

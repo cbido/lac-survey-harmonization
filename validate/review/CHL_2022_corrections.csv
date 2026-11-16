@@ -1,0 +1,3 @@
+target_var,decision,final_source_vars,reason
+dorm_ch,neither,v27a;v29a,"The review took the model's v29a alone, which is only asked of households that share a dwelling: the harmonized variable was missing for 96% of persons. Both variables are needed, v29a where it exists and v27a otherwise."
+ocupa_ci,neither,oficio4_08,"The review took the model's one-digit code. The first build showed IDB group 5 (services) empty, because one digit cannot separate sales workers from service workers. The four-digit code can."

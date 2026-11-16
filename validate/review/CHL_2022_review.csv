@@ -1,0 +1,143 @@
+﻿survey,target_var,target_description,domain,disagreement,reference_status,reference_vars,reference_labels,model_status,model_vars,model_labels,model_confidence,model_rationale,decision,final_source_vars,note
+CHL_2022,estrato_ci,Sampling stratum,design,different variables,mapped,estrato,estrato: Estrato (comuna-área-NSE),mapped,varstrat,varstrat: Estratos de varianza,0.5,The sampling stratum is best represented by the variance strata (varstrat); 'estrato' (comuna-area-NSE) is an alternative.,reference,,
+CHL_2022,condocup_ci,Labor force status,labor,partly different variables,mapped,edad;o1;o2;o3;o6,"edad: Edad
+o1: o1. La semana pasada, ¿trabajó al menos 1 hora, sin considerar quehaceres hoga
+o2: o2. Aunque no trabajó, ¿realizó alguna actividad por al menos 1 hora?
+o3: o3. Aunque no trabajó, ¿tenía algún empleo del que estuvo ausente temporalme
+o6: o6. ¿Buscó trabajo remunerado en las últimas 4 semanas?",mapped,activ;edad,"activ: Condición de actividad
+edad: Edad",0.8,"activ gives employed, unemployed and inactive; edad is needed to flag people below working age. Alternatively it can be rebuilt from o1-o6.",both,,
+CHL_2022,horaspri_ci,Weekly hours worked in main job,labor,different variables,mapped,y2_hrs,"y2_hrs: y2_hrs. Mes pasado, horas pactadas con empleador a las que correspondió sueldo",mapped,o10,o10: o10. ¿Cuántas horas trabaja habitualmente por semana en su trabajo principal?,0.95,o10 asks for the usual weekly hours worked in the main job.,both,,
+CHL_2022,ocupa_ci,Occupation group in main job (9 IDB groups),labor,"reference: not available, model: maps it",not_available,,,mapped,oficio1_08,oficio1_08: oficio1_08. Oficio (1 dígito) CIUO 08,0.85,Main-job occupation coded to CIUO-08 one digit (oficio1_08) can be regrouped into the IDB occupation groups; oficio4_08 is a finer alternative.,model,,
+CHL_2022,rama_ci,Industry in main job (9 IDB groups),labor,different variables,mapped,rama4,rama4: rama4. Actividad económica lugar donde trabaja (4 dígitos),mapped,rama1,rama1: rama1. Actividad económica lugar donde trabaja (1 dígito),0.8,"rama1 is the ISIC one-digit industry of the workplace where the person works, to be regrouped into 9 IDB industry groups (rama1_sub refers to the paying firm).",model,,
+CHL_2022,ylmpri_ci,"Monetary labor income, main job",income,different variables,mapped,yoprcor,yoprcor: Ingreso ocupación principal corregido,mapped,y0101;y0301;y0302;y0303;y0304;y0305;y0306;y0701,"y0101: Asalariados principal - Sueldos y salarios monetario
+y0301: Asalariados principal - Horas extras
+y0302: Asalariados principal - Comisiones
+y0303: Asalariados principal - Propinas
+y0304: Asalariados principal - Asignación por vivienda, transporte, educación
+y0305: Asalariados principal - Viáticos no sujetos a rendición
+y0306: Asalariados principal - Otros ingresos monetarios
+y0701: Independientes principal - Efectivo",0.6,"Main-job monetary labor income combines the salaried monetary components (wages, overtime, commissions, tips, allowances, per diems, other) with the independent workers' cash income; alternatively the corrected y0101c and y0701c, or yoprcor, which also includes in-kind items.",both,,
+CHL_2022,ylnmpri_ci,"Non-monetary labor income, main job",income,"reference: not available, model: maps it",not_available,,,mapped,y0501;y0502;y0503;y0504;y0505;y0506;y0507;y0508;y0509;y0510;y0511;y0512;y0801,"y0501: Asalariados principal - Alimentos y bebidas
+y0502: Asalariados principal - Vales de alimentación
+y0503: Asalariados principal - Vivienda o alojamiento
+y0504: Asalariados principal - Vehículo para uso privado
+y0505: Asalariados principal - Servicio de transporte
+y0506: Asalariados principal - Estacionamiento gratuito
+y0507: Asalariados principal - Teléfono
+y0508: Asalariados principal - Vestimenta
+y0509: Asalariados principal - Servicios de guardería o sala cuna
+y0510: Asalariados principal - Leña
+y0511: Asalariados principal - Bienes o servicios del empleador
+y0512: Asalariados principal - Otros similares en especies
+y0801: Independientes principal - Especies",0.75,Non-monetary income of the main job is the sum of the in-kind benefits of salaried workers (y0501-y0512) plus the in-kind withdrawals of independents (y0801).,model,,
+CHL_2022,ylmsec_ci,"Monetary labor income, second job",income,different variables,mapped,yoprcor;ytrabajocor,"yoprcor: Ingreso ocupación principal corregido
+ytrabajocor: Ingreso del trabajo corregido",mapped,yosa;yosi,"yosa: Ingresos de la ocupación secundaria - Asalariados
+yosi: Ingresos de la ocupación secundaria - Independientes",0.85,Income from the secondary occupation is given for salaried (yosa) and independent (yosi) workers.,model,,
+CHL_2022,ylm_ci,Total monetary labor income,income,different variables,mapped,ytrabajocor,ytrabajocor: Ingreso del trabajo corregido,mapped,y0101;y0301;y0302;y0303;y0304;y0305;y0306;y0401;y0402;y0403;y0404;y0701;y0901;y1101;yosa;yosi,"y0101: Asalariados principal - Sueldos y salarios monetario
+y0301: Asalariados principal - Horas extras
+y0302: Asalariados principal - Comisiones
+y0303: Asalariados principal - Propinas
+y0304: Asalariados principal - Asignación por vivienda, transporte, educación
+y0305: Asalariados principal - Viáticos no sujetos a rendición
+y0306: Asalariados principal - Otros ingresos monetarios
+y0401: Asalariados principal - Bonificaciones o aguinaldos
+y0402: Asalariados principal - Gratificaciones
+y0403: Asalariados principal - Décimo tercer mes o meses adicionales
+y0404: Asalariados principal - Otros similares monetarios
+y0701: Independientes principal - Efectivo
+y0901: Independientes principal - Ventas anuales
+y1101: Ingresos del trabajo de FNR, desocupados e inactivos
+yosa: Ingresos de la ocupación secundaria - Asalariados
+yosi: Ingresos de la ocupación secundaria - Independientes",0.6,"Total monetary labor income sums the monetary components of salaried and independent main-job income plus secondary-job income; the corrected versions y0101c and y0701c could be used instead, and independents' annual sales (y0901) is a judgment call.",model,,
+CHL_2022,ylnm_ci,Total non-monetary labor income,income,"reference: not available, model: maps it",not_available,,,mapped,y0501;y0502;y0503;y0504;y0505;y0506;y0507;y0508;y0509;y0510;y0511;y0512;y0801;yac2,"y0501: Asalariados principal - Alimentos y bebidas
+y0502: Asalariados principal - Vales de alimentación
+y0503: Asalariados principal - Vivienda o alojamiento
+y0504: Asalariados principal - Vehículo para uso privado
+y0505: Asalariados principal - Servicio de transporte
+y0506: Asalariados principal - Estacionamiento gratuito
+y0507: Asalariados principal - Teléfono
+y0508: Asalariados principal - Vestimenta
+y0509: Asalariados principal - Servicios de guardería o sala cuna
+y0510: Asalariados principal - Leña
+y0511: Asalariados principal - Bienes o servicios del empleador
+y0512: Asalariados principal - Otros similares en especies
+y0801: Independientes principal - Especies
+yac2: Consumo de productos agrícolas",0.6,"Total non-monetary labor income combines the in-kind benefits of salaried workers, the in-kind withdrawals of independents and possibly own-consumption of agricultural products (yac2).",model,,
+CHL_2022,ynlm_ci,Total monetary non-labor income,income,partly different variables,mapped,yautcor;ysub;ytrabajocor,"yautcor: Ingreso autónomo corregido
+ysub: Subsidios monetarios
+ytrabajocor: Ingreso del trabajo corregido",mapped,yah1;yah2;yama;ydes;ydim;ydon;yfa1;yfa2;yfam;yids;ymes;yotr;yre1;yre2;yre3;yrut;ysub;yta1;yta2;ytro,"yah1: Intereses por depósitos
+yah2: Dividendo por acciones o bonos financieros
+yama: Arriendo de maquinarias y animales
+ydes: Seguro de desempleo o cesantía
+ydim: Devolución de impuestos
+ydon: Donaciones
+yfa1: Dinero de familiares ajenos al hogar - Del país
+yfa2: Dinero de familiares ajenos al hogar - Del extranjero
+yfam: Asignación familiar
+yids: Indemnizaciones por despido
+ymes: Pensión de alimentos
+yotr: Otros ingresos
+yre1: Arriendos de propiedades urbanas
+yre2: Arriendos de propiedades agrícolas
+yre3: Arriendos de propiedades por temporadas
+yrut: Retiro de utilidades
+ysub: Subsidios monetarios
+yta1: Trabajos de antes - Asalariados
+yta2: Trabajos de antes - No asalariados
+ytro: Remuneración por trabajos ocasionales",0.45,"Monetary non-labor income covers rents, transfers, financial income, subsidies and other income; pensions are excluded because they go to ypen_ci.",both,,
+CHL_2022,rentaimp_ch,Imputed rent of owner-occupied housing,income,"reference: not available, model: maps it",not_available,,,mapped,yaimh,yaimh: Alquiler imputado del hogar,0.9,The household imputed rent (alquiler imputado del hogar) is provided directly.,model,,
+CHL_2022,remesas_ci,Remittances received,income,"reference: not available, model: maps it",not_available,,,mapped,yfa2,yfa2: Dinero de familiares ajenos al hogar - Del extranjero,0.7,"Money received from relatives living abroad (yfa2, from y13c) corresponds to remittances.",model,,
+CHL_2022,asiste_ci,Currently attends school,education,model adds variables,mapped,e3,"e3: e3. En el año escolar 2022, ¿asiste a algún establecimiento de educación?",mapped,asiste;e3,"asiste: Asiste a establecimiento educacional
+e3: e3. En el año escolar 2022, ¿asiste a algún establecimiento de educación?",0.9,"The derived variable 'asiste' (1=Sí, 2=No) is the school attendance indicator and comes from e3, so recode it to 0/1.",model,,
+CHL_2022,aedu_ci,Years of schooling completed,education,different variables,mapped,e3;e6a;e6b,"e3: e3. En el año escolar 2022, ¿asiste a algún establecimiento de educación?
+e6a: e6a. ¿Cuál es el nivel educacional al que asiste o el más alto al cual asisti
+e6b: e6b. En ese nivel educacional, ¿cuál curso estudia o cuál fue el último que",mapped,esc,esc: Años de escolaridad (edad >= 15),0.6,"'esc' gives years of schooling but only for ages 15 and over; younger people would need to be built from e6a, e6b and e6c_completo.",both,,
+CHL_2022,edupub_ci,Attends a public institution,education,"reference: not available, model: maps it",not_available,,,mapped,asiste;depen;e10;e9depen,"asiste: Asiste a establecimiento educacional
+depen: Dependencia administrativa del establecimiento educacional
+e10: e10. En 2022, ¿cuál es la dependencia administrativa del estab. educacional?
+e9depen: e9depen. Dependencia administrativa del establecimiento educacional (Mineduc)",0.7,"Public institution can be derived from the administrative dependency (e10, e9depen or depen) among those who attend, coding municipal, SLEP, JUNJI, INTEGRA and state universities as public.",model,,
+CHL_2022,aguared_ch,Piped water access,housing,model adds variables,mapped,v20,v20: v20. ¿De dónde proviene el agua de la vivienda?,mapped,v20;v22,"v20: v20. ¿De dónde proviene el agua de la vivienda?
+v22: v22. ¿Cuál es el sistema de distribución del agua en la vivienda?",0.8,"Piped water access comes from v20=1 (red pública), optionally also requiring the distribution system in v22 (llave dentro de la vivienda or sitio).",model,,
+CHL_2022,aguafuente_ch,Main source of drinking water,housing,partly different variables,mapped,v20;v22,"v20: v20. ¿De dónde proviene el agua de la vivienda?
+v22: v22. ¿Cuál es el sistema de distribución del agua en la vivienda?",mapped,v20;v21,"v20: v20. ¿De dónde proviene el agua de la vivienda?
+v21: v21. ¿Cómo obtiene el agua?",0.85,"The water source is in v20 (red pública, pozo, río, camión aljibe, otra), and v21 gives additional detail on the supplier.",model,,
+CHL_2022,piso_ch,Main floor material,housing,"reference: not available, model: maps it",not_available,,,mapped,v4,v4: v4. ¿Cuál es el material que predomina en el piso de la vivienda?,0.95,v4 gives the predominant floor material.,model,,
+CHL_2022,pared_ch,Main wall material,housing,"reference: not available, model: maps it",not_available,,,mapped,v2,v2: v2. ¿Cuál es el material que predomina en los muros exteriores de la vivienda?,0.95,v2 gives the predominant exterior wall material.,model,,
+CHL_2022,techo_ch,Main roof material,housing,"reference: not available, model: maps it",not_available,,,mapped,v6,v6: v6. ¿Cuál es el material que predomina en el techo de la vivienda?,0.95,v6 gives the predominant roof material.,model,,
+CHL_2022,dorm_ch,Number of rooms used only for sleeping,housing,model omits variables,mapped,v27a;v29a,"v27a: v27a. ¿Cuántos dormitorios (uso exclusivo para dormir) tiene la vivienda?
+v29a: v29a. ¿Cuántos dormitorios (uso exclusivo para dormir) ocupa su hogar?",mapped,v29a,v29a: v29a. ¿Cuántos dormitorios (uso exclusivo para dormir) ocupa su hogar?,0.8,v29a gives the number of exclusive-use bedrooms occupied by the household (v27a is for the whole dwelling); household-level is the better match.,model,,
+CHL_2022,auto_ch,Household owns a car,housing,"reference: not available, model: maps it",not_available,,,mapped,r14,r14: r14. ¿Ud. o su hogar es dueño de un vehículo de uso laboral o particular…?,0.7,"r14 asks whether the household owns a work or private vehicle, which is only a proxy for car ownership since it does not distinguish vehicle type.",model,,
+CHL_2022,internet_ch,Household has an internet connection,housing,"reference: not available, model: maps it",not_available,,,mapped,r17a;r17b;r17c;r17d;r17e,"r17a: r17a. Acceso a Internet en la vivienda: Banda ancha fija
+r17b: r17b. Acceso a Internet en la vivienda: Banda ancha móvil (módem, Wifi o USB)
+r17c: r17c. Acceso a Internet en la vivienda: Teléfono móvil
+r17d: r17d. Acceso a Internet en la vivienda: Tablet u otro dispositivo
+r17e: r17e. Acceso a Internet en la vivienda: Internet satelital",0.75,"Household has internet if any of the dwelling internet access types (fixed broadband, mobile broadband, mobile phone, tablet, satellite) is 1; r17c/r17d may be broader than a fixed connection.",model,,
+CHL_2022,viviprop_ch,Dwelling tenure,housing,model omits variables,mapped,v13;v13_propia,"v13: v13. Su hogar, ¿bajo qué situación ocupa la vivienda?
+v13_propia: v13_propia. ¿Esta vivienda es…?",mapped,v13,"v13: v13. Su hogar, ¿bajo qué situación ocupa la vivienda?",0.85,"v13 gives dwelling tenure (1 owned, 2 rented, 3 ceded, 9-11 usufruct/irregular occupation), which can be recoded to owned=1, rented=0, de facto=3.",reference,,
+CHL_2022,lp_ci,Official national poverty line,income,"reference: not available, model: maps it",not_available,,,mapped,lp,lp: Linea de pobreza,0.95,The survey provides the official poverty line directly as lp.,model,,
+CHL_2022,lpe_ci,Official national extreme poverty line,income,"reference: not available, model: maps it",not_available,,,mapped,li,li: Linea de indigencia,0.95,The official extreme poverty (indigence) line is given as li.,model,,
+CHL_2022,afiliado_ci,Affiliated to social security,labor,model adds variables,mapped,o31,o31: o31. ¿Se encuentra afiliado(a) a algún sistema previsional?,mapped,o31;o32,"o31: o31. ¿Se encuentra afiliado(a) a algún sistema previsional?
+o32: o32. ¿Cotizó durante el mes pasado en algún sistema previsional?",0.85,"o31 asks about affiliation to a pension system, and o32 can be used to also flag contributors as affiliated.",model,,
+CHL_2022,tipocontrato_ci,Type of contract in main job,labor,"reference: not available, model: maps it",not_available,,,mapped,o12;o18;o19,"o12: o12. ¿El trabajo o negocio principal es de tipo…?
+o18: o18. En su trabajo principal, ¿qué tipo de contrato o acuerdo de trabajo tiene
+o19: o19. En su trabajo principal, ¿tiene contrato de trabajo escrito?",0.7,"o19 indicates whether there is a written contract, o18 gives its type (indefinite, fixed-term, by project) and o12 the job's permanence.",model,,
+CHL_2022,tamemp_ci,Firm size,labor,"reference: not available, model: maps it",not_available,,,mapped,o25,"o25: o25. ¿Cuántas personas trabajan en ese negocio, empresa o institución en Chil",0.85,"o25 gives the number of people working in the firm in size brackets, which can be collapsed into small/medium/large.",model,,
+CHL_2022,ypen_ci,Contributory pension income,income,different variables,mapped,y28_1b;y28_1c;y28_1d;y28_1e;y28_1f;y28_1g;y28_1h,"y28_1b: y28_1b. Mes pasado, ¿recibió Jubilación o Pensión de Vejez con APS?
+y28_1c: y28_1c. Mes pasado, ¿recibió Jubilación, Pensión de Vejez o PGU?
+y28_1d: y28_1d. Mes pasado, ¿recibió Pensión Básica Solidaria de Invalidez?
+y28_1e: y28_1e. Mes pasado, ¿recibió Jubilación de Invalidez con APS?
+y28_1f: y28_1f. Mes pasado, ¿recibió Jubilación o Pensión de Invalidez?
+y28_1g: y28_1g. Mes pasado, ¿recibió Montepío o Pensión de Viudez?
+y28_1h: y28_1h. Mes pasado, ¿recibió Pensión de Orfandad?",mapped,y2803;yesp;yinv02;ymon02;yorf;yotp,"y2803: Jubilación o pensión de vejez
+yesp: Pensión por leyes especiales de reparación
+yinv02: Jubilación o pensión de invalidez
+ymon02: Montepío o pensión de viudez
+yorf: Pensión de orfandad
+yotp: Otro tipo de pensión",0.65,"Pension income comes from the old-age, disability, survivor, orphan, special-law and other pension aggregates; whether non-contributory PGU/PBS components are included depends on the definition.",both,,
+CHL_2022,migrante_ci,International migrant,demographics,different variables,mapped,r1b,"r1b: r1b. Cuando nació, ¿en qué comuna o país vivía su madre?",mapped,lugar_nac,lugar_nac: Lugar de nacimiento,0.7,"lugar_nac flags birth outside Chile, which is the standard way to identify an international migrant; r1a (nationality) and r1c (year of arrival) are alternatives.",model,,
+CHL_2022,dis_ci,Person with a disability,demographics,different variables,mapped,h7a;h7b;h7c;h7d;h7e;h7f,"h7a: h7a. ¿Tiene dificultad para ver incluso si lleva lentes?
+h7b: h7b. ¿Tiene dificultad para oír incluso si utiliza un audífono?
+h7c: h7c. ¿Tiene dificultad para caminar o para subir escaleras?
+h7d: h7d. ¿Tiene dificultad para recordar o para concentrarse?
+h7e: h7e. ¿Tiene dificultad en su cuidado personal como para asearse o vestirse?
+h7f: h7f. ¿Tiene dificultad para comunicarse, comprender o ser comprendido por otros",mapped,disc_wg,disc_wg: Situación de discapacidad (indicador Washington Group),0.85,"disc_wg is the Washington Group disability indicator (0/1), built from h7a-h7f.",model,,

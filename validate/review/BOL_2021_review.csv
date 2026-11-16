@@ -1,0 +1,142 @@
+﻿survey,target_var,target_description,domain,disagreement,reference_status,reference_vars,reference_labels,model_status,model_vars,model_labels,model_confidence,model_rationale,decision,final_source_vars,note
+BOL_2021,afroind_ci,Self-identified race or ethnicity,demographics,model adds variables,mapped,s01a_09,s01a_09: Como boliviana o boliviano ¿A que nación o pueblo indígena originario campesino o afro bol,mapped,s01a_09;s01a_09npioc,"s01a_09: Como boliviana o boliviano ¿A que nación o pueblo indígena originario campesino o afro bol
+s01a_09npioc: Como boliviana o boliviano ¿A que nación o pueblo indígena originario campesino o afro bol",0.85,"s01a_09 shows whether the person belongs to an indigenous or Afro-Bolivian group and s01a_09npioc names the group, which allows indigenous vs afro-descendant vs other.",,,
+BOL_2021,cotizando_ci,Currently contributing to social security,labor,"reference: not available, model: maps it",not_available,,,mapped,s04f_36,"s04f_36: ¿Actualmente, está usted aportando a la AFP?",0.7,"s04f_36 asks whether the person is currently contributing to the AFP pension system, which proxies current social security contribution.",,,
+BOL_2021,condocup_ci,Labor force status,labor,model adds variables,mapped,desocupado;ocupado;pei,"desocupado: Poblacion Desocupada
+ocupado: Poblacion Ocupada
+pei: Poblacion Inactiva",mapped,condact;desocupado;ocupado;pei;pet;s04a_01,"condact: Condicion de Actividad Ocupacion Principal
+desocupado: Poblacion Desocupada
+ocupado: Poblacion Ocupada
+pei: Poblacion Inactiva
+pet: Poblacion en edad de trabajar 14 o más años
+s04a_01: Durante la semana pasada, ¿trabajó al menos una hora?",0.85,"The derived labor force condition variables (condact, ocupado, desocupado, pei) with the working-age flag pet give employed, unemployed, inactive and below-working-age (pent).",,,
+BOL_2021,ocupa_ci,Occupation group in main job (9 IDB groups),labor,model adds variables,mapped,s04b_09a_cod,"s04b_09a_cod: Durante la semana pasada, ¿cuál fue su ocupación principal? Código",mapped,cob_op;s04b_09a_cod,"cob_op: Grupo Ocupacional ocupación principal
+s04b_09a_cod: Durante la semana pasada, ¿cuál fue su ocupación principal? Código",0.8,"cob_op is the survey's occupational group for the main job (ISCO-like, 0-9 plus 99), which can be recoded into the 9 IDB groups; s04b_09a_cod is the raw occupation code.",,,
+BOL_2021,rama_ci,Industry in main job (9 IDB groups),labor,model adds variables,mapped,caeb_op,caeb_op: Clasificación de Actividad Económica de Bolivia Ocupacion principal,mapped,caeb_op;s04b_10a_cod,"caeb_op: Clasificación de Actividad Económica de Bolivia Ocupacion principal
+s04b_10a_cod: ¿Cuál es la actividad económica principal del establecimiento, negocio, institución o luga",0.8,"caeb_op gives the CAEB industry classification for the main occupation, to be regrouped into the 9 IDB branches; s04b_10a_cod is the raw activity code.",,,
+BOL_2021,ylmpri_ci,"Monetary labor income, main job",income,different variables,mapped,s04c_17a;s04c_17b;s04c_18a;s04c_18b;s04c_19aa;s04c_19ab;s04c_19ba;s04c_19bb;s04d_24a;s04d_24b,"s04c_17a: ¿Cuánto es su salario líquido, excluyendo los descuentos de ley (AFP, IVA)? Monto (Bs)
+s04c_17b: ¿Cuánto es su salario líquido, excluyendo los descuentos de ley (AFP, IVA)? Frecuencia de 
+s04c_18a: Durante los últimos doce meses, ¿recibió usted pagos por:A. Bono o prima de producción? Mo
+s04c_18b: Durante los últimos doce meses, ¿recibió usted pagos por:B. Aguinaldo? Monto (Bs)
+s04c_19aa: Durante los últimos doce meses, ¿recibió usted pagos en efectivo por: A.Comisiones, destaj
+s04c_19ab: Durante los últimos doce meses, ¿recibió usted pagos en efectivo por: A.Comisiones, destaj
+s04c_19ba: Durante los últimos doce meses, ¿recibió usted pagos en efectivo por: B.Horas Extras? Mont
+s04c_19bb: Durante los últimos doce meses, ¿recibió usted pagos en efectivo por: B.Horas Extras? Frec
+s04d_24a: Una vez descontadas todas sus obligaciones (sueldos, salarios, compra de material, mercade
+s04d_24b: Una vez descontadas todas sus obligaciones (sueldos, salarios, compra de material, mercade",mapped,yprilab,yprilab: Ingreso laboral Ocupación Principal (Bs/Mes),0.7,"yprilab is the monthly labor income from the main occupation; it could alternatively be rebuilt from s04c_17a/s04c_17b (salary) or s04d_22a/s04d_22b (total income) with the extra payments, though it may include in-kind items.",,,
+BOL_2021,ylnmpri_ci,"Non-monetary labor income, main job",income,model adds variables,mapped,s04c_21a;s04c_21a1;s04c_21a2;s04c_21b;s04c_21b1;s04c_21b2;s04c_21c;s04c_21c1;s04c_21d;s04c_21d1;s04c_21d2;s04c_21e;s04c_21e1;s04c_21e2,"s04c_21a: Además de los ingresos recibidos en dinero por su trabajo, en los últimos doce meses ¿reci
+s04c_21a1: Además de los ingresos recibidos en dinero por su trabajo, en los últimos doce meses ¿reci
+s04c_21a2: Además de los ingresos recibidos en dinero por su trabajo, en los últimos doce meses ¿reci
+s04c_21b: Además de los ingresos recibidos en dinero por su trabajo, en los últimos doce meses ¿reci
+s04c_21b1: Además de los ingresos recibidos en dinero por su trabajo, en los últimos doce meses ¿reci
+s04c_21b2: Además de los ingresos recibidos en dinero por su trabajo, en los últimos doce meses ¿reci
+s04c_21c: Además de los ingresos recibidos en dinero por su trabajo, en los últimos doce meses ¿reci
+s04c_21c1: Además de los ingresos recibidos en dinero por su trabajo, en los últimos doce meses ¿reci
+s04c_21d: Además de los ingresos recibidos en dinero por su trabajo, en los últimos doce meses ¿reci
+s04c_21d1: Además de los ingresos recibidos en dinero por su trabajo, en los últimos doce meses ¿reci
+s04c_21d2: Además de los ingresos recibidos en dinero por su trabajo, en los últimos doce meses ¿reci
+s04c_21e: Además de los ingresos recibidos en dinero por su trabajo, en los últimos doce meses ¿reci
+s04c_21e1: Además de los ingresos recibidos en dinero por su trabajo, en los últimos doce meses ¿reci
+s04c_21e2: Además de los ingresos recibidos en dinero por su trabajo, en los últimos doce meses ¿reci",mapped,s04c_21a;s04c_21a1;s04c_21a2;s04c_21b;s04c_21b1;s04c_21b2;s04c_21c;s04c_21c1;s04c_21c2;s04c_21d;s04c_21d1;s04c_21d2;s04c_21e;s04c_21e1;s04c_21e2,"s04c_21a: Además de los ingresos recibidos en dinero por su trabajo, en los últimos doce meses ¿reci
+s04c_21a1: Además de los ingresos recibidos en dinero por su trabajo, en los últimos doce meses ¿reci
+s04c_21a2: Además de los ingresos recibidos en dinero por su trabajo, en los últimos doce meses ¿reci
+s04c_21b: Además de los ingresos recibidos en dinero por su trabajo, en los últimos doce meses ¿reci
+s04c_21b1: Además de los ingresos recibidos en dinero por su trabajo, en los últimos doce meses ¿reci
+s04c_21b2: Además de los ingresos recibidos en dinero por su trabajo, en los últimos doce meses ¿reci
+s04c_21c: Además de los ingresos recibidos en dinero por su trabajo, en los últimos doce meses ¿reci
+s04c_21c1: Además de los ingresos recibidos en dinero por su trabajo, en los últimos doce meses ¿reci
+s04c_21c2: Además de los ingresos recibidos en dinero por su trabajo, en los últimos doce meses ¿reci
+s04c_21d: Además de los ingresos recibidos en dinero por su trabajo, en los últimos doce meses ¿reci
+s04c_21d1: Además de los ingresos recibidos en dinero por su trabajo, en los últimos doce meses ¿reci
+s04c_21d2: Además de los ingresos recibidos en dinero por su trabajo, en los últimos doce meses ¿reci
+s04c_21e: Además de los ingresos recibidos en dinero por su trabajo, en los últimos doce meses ¿reci
+s04c_21e1: Además de los ingresos recibidos en dinero por su trabajo, en los últimos doce meses ¿reci
+s04c_21e2: Además de los ingresos recibidos en dinero por su trabajo, en los últimos doce meses ¿reci",0.8,"In-kind payments from the main job (food, transport, clothing, housing, other) are asked with a receipt flag, frequency and amount, so they can be annualized and summed into monthly non-monetary income.",,,
+BOL_2021,ylmsec_ci,"Monetary labor income, second job",income,partly different variables,mapped,s04f_31a;s04f_31b;s04f_32a;s04f_32a1,"s04f_31a: ¿Cuánto es su salario líquido en ésta otra ocupación, excluyendo los descuentos de ley (AF
+s04f_31b: ¿Cuánto es su salario líquido en ésta otra ocupación, excluyendo los descuentos de ley (AF
+s04f_32a: Durante los últimos doce meses, ha recibido: A. ¿Pago por horas extras, bono o prima de pr
+s04f_32a1: Durante los últimos doce meses, ha recibido: A. ¿Pago por horas extras, bono o prima de Mo",mapped,s04f_31a;s04f_31b;s04f_33a;s04f_33b;s04f_34a;s04f_34b;yseclab,"s04f_31a: ¿Cuánto es su salario líquido en ésta otra ocupación, excluyendo los descuentos de ley (AF
+s04f_31b: ¿Cuánto es su salario líquido en ésta otra ocupación, excluyendo los descuentos de ley (AF
+s04f_33a: ¿Cuánto es su ingreso total en ésta otra ocupación? Monto (Bs)
+s04f_33b: ¿Cuánto es su ingreso total en ésta otra ocupación? Frecuencia de ingreso:
+s04f_34a: Una vez pagadas todas sus obligaciones (sueldos, salarios, compra de materiales, etc.), ¿c
+s04f_34b: Una vez pagadas todas sus obligaciones (sueldos, salarios, compra de materiales, etc.), ¿c
+yseclab: Ingreso laboral Ocupación Secundaria (Bs/Mes)",0.75,"The second-job income questions (total income with frequency, and net income left for the household) or the precomputed yseclab give monetary income from the second job.",,,
+BOL_2021,ynlm_ci,Total monetary non-labor income,income,partly different variables,mapped,s05a_01a;s05a_01b;s05a_01c;s05a_01d;s05a_01e0;s05a_02a;s05a_02b;s05a_02c;s05a_03a;s05a_03b;s05a_03c;s05a_04a;s05a_04b;s05a_04d;s05b_05aa;s05b_05ab;s05b_05ba;s05b_05bb;s05b_07aa;s05b_07ab;s05c_09;s05c_10a;s05c_10b,"s05a_01a: Recibe usted ingresos (rentas) mensuales por: A. ¿Jubilación (vejez)?
+s05a_01b: Recibe usted ingresos (rentas) mensuales por: B. ¿Benemérito?
+s05a_01c: Recibe usted ingresos (rentas) mensuales por: C. ¿Invalidez?
+s05a_01d: Recibe usted ingresos (rentas) mensuales por: D. ¿Viudez, orfandad?
+s05a_01e0: Recibe usted ingresos (rentas) mensuales por: E. ¿Renta Dignidad? Monto (Bs)
+s05a_02a: Además de los ingresos mencionados, recibe usted ingresos (rentas) mensuales por: A. ¿Inte
+s05a_02b: Además de los ingresos mencionados, recibe usted ingresos (rentas) mensuales por: B. ¿Alqu
+s05a_02c: Además de los ingresos mencionados, recibe usted ingresos (rentas) mensuales por: C. ¿Otra
+s05a_03a: Durante los últimos doce meses, ¿recibió usted: (en montos anuales) A. Alquileres de propi
+s05a_03b: Durante los últimos doce meses, ¿recibió usted: (en montos anuales) B. Dividendos, utilida
+s05a_03c: Durante los últimos doce meses, ¿recibió usted: (en montos anuales) C. Alquiler de maquina
+s05a_04a: Además de los ingresos mencionados anteriormente, durante los últimos doce meses, ¿recibió
+s05a_04b: Además de los ingresos mencionados anteriormente, durante los últimos doce meses, ¿recibió
+s05a_04d: Además de los ingresos mencionados anteriormente, durante los últimos doce meses, ¿recibió
+s05b_05aa: En los últimos doce meses, ¿recibió usted… A. Asistencia familiar por divorcio o separació
+s05b_05ab: En los últimos doce meses, ¿recibió usted… A. Asistencia familiar por divorcio o separació
+s05b_05ba: En los últimos doce meses, ¿recibió usted… B. Dinero de otras personas que residen en este
+s05b_05bb: En los últimos doce meses, ¿recibió usted… B. Dinero de otras personas que residen en este
+s05b_07aa: En los últimos doce meses, ¿recibió usted… A. Otros bonos sociales en efectivo? Monto (Bs)
+s05b_07ab: En los últimos doce meses, ¿recibió usted… A. Otros bonos sociales en efectivo? Frecuencia
+s05c_09: ¿Con que frecuencia recibió el dinero o encomiendas mencionadas?
+s05c_10a: Si recibió dinero, ¿cuál es el monto y en qué moneda lo recibió? Monto Bs.
+s05c_10b: Si recibió dinero, ¿cuál es el monto y en qué moneda lo recibió? Moneda",mapped,s05a_01a;s05a_01b;s05a_01c;s05a_01d;s05a_01e0;s05a_02a;s05a_02b;s05a_02c;s05a_03a;s05a_03b;s05a_03c;s05a_04a;s05a_04b;s05a_04c;s05a_04d;s05b_05aa;s05b_05ab;s05b_05ba;s05b_05bb;s05b_07aa;s05b_07ab;s05c_09;s05c_10a;ynolab,"s05a_01a: Recibe usted ingresos (rentas) mensuales por: A. ¿Jubilación (vejez)?
+s05a_01b: Recibe usted ingresos (rentas) mensuales por: B. ¿Benemérito?
+s05a_01c: Recibe usted ingresos (rentas) mensuales por: C. ¿Invalidez?
+s05a_01d: Recibe usted ingresos (rentas) mensuales por: D. ¿Viudez, orfandad?
+s05a_01e0: Recibe usted ingresos (rentas) mensuales por: E. ¿Renta Dignidad? Monto (Bs)
+s05a_02a: Además de los ingresos mencionados, recibe usted ingresos (rentas) mensuales por: A. ¿Inte
+s05a_02b: Además de los ingresos mencionados, recibe usted ingresos (rentas) mensuales por: B. ¿Alqu
+s05a_02c: Además de los ingresos mencionados, recibe usted ingresos (rentas) mensuales por: C. ¿Otra
+s05a_03a: Durante los últimos doce meses, ¿recibió usted: (en montos anuales) A. Alquileres de propi
+s05a_03b: Durante los últimos doce meses, ¿recibió usted: (en montos anuales) B. Dividendos, utilida
+s05a_03c: Durante los últimos doce meses, ¿recibió usted: (en montos anuales) C. Alquiler de maquina
+s05a_04a: Además de los ingresos mencionados anteriormente, durante los últimos doce meses, ¿recibió
+s05a_04b: Además de los ingresos mencionados anteriormente, durante los últimos doce meses, ¿recibió
+s05a_04c: Además de los ingresos mencionados anteriormente, durante los últimos doce meses, ¿recibió
+s05a_04d: Además de los ingresos mencionados anteriormente, durante los últimos doce meses, ¿recibió
+s05b_05aa: En los últimos doce meses, ¿recibió usted… A. Asistencia familiar por divorcio o separació
+s05b_05ab: En los últimos doce meses, ¿recibió usted… A. Asistencia familiar por divorcio o separació
+s05b_05ba: En los últimos doce meses, ¿recibió usted… B. Dinero de otras personas que residen en este
+s05b_05bb: En los últimos doce meses, ¿recibió usted… B. Dinero de otras personas que residen en este
+s05b_07aa: En los últimos doce meses, ¿recibió usted… A. Otros bonos sociales en efectivo? Monto (Bs)
+s05b_07ab: En los últimos doce meses, ¿recibió usted… A. Otros bonos sociales en efectivo? Frecuencia
+s05c_09: ¿Con que frecuencia recibió el dinero o encomiendas mencionadas?
+s05c_10a: Si recibió dinero, ¿cuál es el monto y en qué moneda lo recibió? Monto Bs.
+ynolab: Ingreso no laboral (Bs/Mes)",0.7,"Monetary non-labor income is built from pensions, Renta Dignidad, rents, interest, transfers, bonuses and remittances, or taken from the precomputed ynolab.",,,
+BOL_2021,remesas_ci,Remittances received,income,model adds variables,mapped,s05c_09;s05c_10a;s05c_10b,"s05c_09: ¿Con que frecuencia recibió el dinero o encomiendas mencionadas?
+s05c_10a: Si recibió dinero, ¿cuál es el monto y en qué moneda lo recibió? Monto Bs.
+s05c_10b: Si recibió dinero, ¿cuál es el monto y en qué moneda lo recibió? Moneda",mapped,s05b_05ba;s05b_05bb;s05c_08;s05c_09;s05c_10a;s05c_10b,"s05b_05ba: En los últimos doce meses, ¿recibió usted… B. Dinero de otras personas que residen en este
+s05b_05bb: En los últimos doce meses, ¿recibió usted… B. Dinero de otras personas que residen en este
+s05c_08: En los últimos 12 meses, ¿recibió (...) dinero o encomiendas de otras personas que residen
+s05c_09: ¿Con que frecuencia recibió el dinero o encomiendas mencionadas?
+s05c_10a: Si recibió dinero, ¿cuál es el monto y en qué moneda lo recibió? Monto Bs.
+s05c_10b: Si recibió dinero, ¿cuál es el monto y en qué moneda lo recibió? Moneda",0.75,"Remittances from abroad are reported with a receipt flag, frequency, amount and currency (s05c), and transfers from other people within the country (s05b_05ba/bb) may be added.",,,
+BOL_2021,rentaimp_ch,Imputed rent of owner-occupied housing,income,"reference: not available, model: maps it",not_available,,,mapped,s07a_02;s07a_05,"s07a_02: La vivienda que ocupa el hogar es:
+s07a_05: Si tuviese que pagar alquiler, ¿Cuánto deberia pagar mensualmente por concepto de alquiler",0.75,"The hogar-reported hypothetical rent (s07a_05), taken for owner-occupied dwellings identified by tenure (s07a_02), gives the imputed rent.",,,
+BOL_2021,aedu_ci,Years of schooling completed,education,different variables,mapped,s03a_02a;s03a_02c,"s03a_02a: ¿Cuál fue el NIVEL Y CURSO más alto de instrucción que aprobó? Nivel
+s03a_02c: ¿Cuál fue el NIVEL Y CURSO más alto de instrucción que aprobó? Curso",mapped,aestudio,aestudio: Años de estudio,0.85,"The survey provides a precomputed years-of-study variable (aestudio), which can be rebuilt from s03a_02a and s03a_02c if needed.",,,
+BOL_2021,asiste_ci,Currently attends school,education,model adds variables,mapped,s03a_04,"s03a_04: Durante este año, ¿se inscribió o matriculó en algún curso o grado de educación escolar, a",mapped,s03a_04;s03b_10,"s03a_04: Durante este año, ¿se inscribió o matriculó en algún curso o grado de educación escolar, a
+s03b_10: Actualmente, ¿(…) pasa clases en el nivel y curso al que se matriculó esta gestión 2021?",0.7,Current attendance is derived from enrollment (s03a_04) and whether the person currently attends classes in any modality (s03b_10); the precomputed cmasi variable is a possible alternative.,,,
+BOL_2021,edupub_ci,Attends a public institution,education,model adds variables,mapped,s03a_09,s03a_09: El establecimiento en el que se matriculó es:,mapped,s03a_04;s03a_09,"s03a_04: Durante este año, ¿se inscribió o matriculó en algún curso o grado de educación escolar, a
+s03a_09: El establecimiento en el que se matriculó es:",0.8,"s03a_09 identifies whether the establishment where the person enrolled is public (1) or private (2), conditional on enrollment.",,,
+BOL_2021,bano_ch,Sanitation facility,housing,model adds variables,mapped,s07a_13;s07a_14,"s07a_13: ¿Qué tipo de baño, servicio sanitario o letrina utilizan normalmente los miembros de su ho
+s07a_14: ¿El baño, servicio sanitario o letrina tiene desagüe…",mapped,s07a_13;s07a_14;s07a_15,"s07a_13: ¿Qué tipo de baño, servicio sanitario o letrina utilizan normalmente los miembros de su ho
+s07a_14: ¿El baño, servicio sanitario o letrina tiene desagüe…
+s07a_15: ¿El baño, servicio sanitario o letrina es…",0.8,"Sanitation facility type (s07a_13), drainage destination (s07a_14) and sharing (s07a_15) combine to build the harmonized category.",,,
+BOL_2021,luz_ch,Electricity is the main lighting source,housing,model omits variables,mapped,s07a_04;s07a_16,"s07a_04: ¿Cuánto paga mensualmente por concepto de alquiler de esta vivienda? Monto en Bs sin centa
+s07a_16: ¿Usa energía eléctrica para alumbrar esta vivienda?",mapped,s07a_16,s07a_16: ¿Usa energía eléctrica para alumbrar esta vivienda?,0.9,s07a_16 asks directly whether electricity is used to light the dwelling.,,,
+BOL_2021,piso_ch,Main floor material,housing,model adds variables,mapped,s07a_09,s07a_09: ¿Cuál es el material más utilizado en los pisos de esta vivienda?,mapped,s07a_09;s07a_09e,"s07a_09: ¿Cuál es el material más utilizado en los pisos de esta vivienda?
+s07a_09e: ¿Cuál es el material más utilizado en los pisos de esta vivienda? Otro (Especifique)",0.9,"s07a_09 reports the main floor material, with an open-text 'other' field in s07a_09e.",,,
+BOL_2021,pared_ch,Main wall material,housing,model adds variables,mapped,s07a_06,s07a_06: ¿Cuál es el material de construcción más utilizado en las paredes de esta vivienda?,mapped,s07a_06;s07a_06e,"s07a_06: ¿Cuál es el material de construcción más utilizado en las paredes de esta vivienda?
+s07a_06e: ¿Cuál es el material de construcción más utilizado en las paredes de esta vivienda? Otro (",0.9,"s07a_06 reports the main wall material, with an open-text 'other' field in s07a_06e.",,,
+BOL_2021,techo_ch,Main roof material,housing,model adds variables,mapped,s07a_08,s07a_08: ¿Cuál es el material más utilizado en los techos de esta vivienda?,mapped,s07a_08;s07a_08e,"s07a_08: ¿Cuál es el material más utilizado en los techos de esta vivienda?
+s07a_08e: ¿Cuál es el material más utilizado en los techos de esta vivienda? Otro (Especifique)",0.9,"s07a_08 reports the main roof material, with an open-text 'other' field in s07a_08e.",,,
+BOL_2021,cel_ch,Household has mobile phone service,housing,different variables,mapped,s03c_13,s03c_13: ¿(....) dispone de teléfono celular para uso personal?,mapped,item;s09c_14,"item: ¿El hogar tiene, posee o dispone: Item
+s09c_14: ¿El hogar tiene, posee o dispone...",0.8,"Mobile phone ownership is in the household assets module, item 8 (Teléfono celular), with s09c_14 giving the yes/no answer. Individual s03c_13 could serve as a fallback.",,,
+BOL_2021,migrante_ci,International migrant,demographics,different variables,mapped,s01a_09,s01a_09: Como boliviana o boliviano ¿A que nación o pueblo indígena originario campesino o afro bol,mapped,s01b_11a;s01b_11e,"s01b_11a: ¿Dónde vivía hace 5 años (2016)?
+s01b_11e: Especifique el País dónde vivía hace 5 años (2016)?",0.45,"The survey only asks about residence five years ago (abroad = code 3, with the country in s01b_11e), so international migrant is a recent-migrant proxy and there is no birthplace or nationality question.",,,

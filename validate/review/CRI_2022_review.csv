@@ -1,0 +1,118 @@
+﻿survey,target_var,target_description,domain,disagreement,reference_status,reference_vars,reference_labels,model_status,model_vars,model_labels,model_confidence,model_rationale,decision,final_source_vars,note
+CRI_2022,dis_ci,Person with a disability,demographics,model omits variables,mapped,a8a;a8b,"a8a: Primera mención de tipo de discapacidad
+a8b: Segunda mención de tipo de discapacidad",mapped,a8a,a8a: Primera mención de tipo de discapacidad,0.85,"a8a (with a8b as secondary mention) identifies persons with a permanent limitation, so disability is 1 when a8a is 1-7 and 0 when it is 0.",,,
+CRI_2022,cotizando_ci,Currently contributing to social security,labor,model adds variables,mapped,a11,a11: Condición de aseguramiento,mapped,a11;a12;e10a,"a11: Condición de aseguramiento
+a12: Pensiones: régimen básico obligatorio
+e10a: Rebajos por seguro social",0.55,"Current contribution is best proxied by social-security deductions from the salary (e10a), complemented by the insurance type (a11) and pension scheme contribution (a12).",,,
+CRI_2022,afiliado_ci,Affiliated to social security,labor,"reference: not available, model: maps it",not_available,,,mapped,a11,a11: Condición de aseguramiento,0.7,Insurance status (a11) distinguishes the uninsured (0) from the various types of social security coverage.,,,
+CRI_2022,condocup_ci,Labor force status,labor,different variables,mapped,b1;b2;b3;b5;b6;b7a;b7b;b7c;b7d;b7e;b7f;b7g;b7h;b7i;b7j;b7k;b8;estabili;g6,"b1: Trabajó la semana pasada
+b2: Realizó actividad por dinero o algo a cambio (actividades marginales)
+b3: Ayudó sin recibir pago
+b5: Motivos de ausencia
+b6: Disponibilidad para trabajar
+b7a: Consultó con amigos o parientes
+b7b: Preguntó lugares de trabajo
+b7c: Ofreció sus servicios a domicilio
+b7d: Puso o contestó anuncios
+b7e: Llenó solicitudes
+b7f: Entregó currículos en ferias o bolsas de empleo
+b7g: Envió currículos por correo, internet o personalmente
+b7h: Asistió entrevistas
+b7i: Buscó clientes o realizo trámites para establecer su propio negocio
+b7j: Acondicionó local u oficina para iniciar o continuar un negocio
+b7k: Realizó otra gestión
+b8: Razones por las que no buscó trabajo
+estabili: Estabilidad en el empleo
+g6: ¿Ha trabajado alguna vez?",mapped,a5;condact,"a5: Edad
+condact: Condición de actividad",0.85,"condact gives employed, unemployed, and inactive, and age a5 is used to assign below working age (the survey's cutoff is 15, with condact apparently covering ages 15+).",,,
+CRI_2022,ypen_ci,Contributory pension income,income,different variables,mapped,h9h1;h9h2,"h9h1: Monto pensiones o jubilaciones nacionales
+h9h2: Periodo pensiones o jubilaciones nacionales",mapped,tape;tapn;tpe;tpn;ttpe;ttpn,"tape: Transferencia aguinaldo pensión extranjera
+tapn: Transferencia aguinaldo pensión nacional
+tpe: Transferencia pensión del extranjero
+tpn: Transferencia pensión nacional
+ttpe: TOTAL TRANSFERENCIA PENSION EXTRANJERA
+ttpn: TOTAL TRANSFERENCIA PENSION NACIONAL",0.6,"Pension income comes from national pensions (ttpn, tpn plus aguinaldo tapn) and foreign pensions (ttpe, tpe plus tape); contributory status is not separated from the non-contributory RNC pension, which is excluded.",,,
+CRI_2022,horaspri_ci,Weekly hours worked in main job,labor,different variables,mapped,c2a1,c2a1: Horas normales empleo principal,mapped,horefepri;hornorpri,"horefepri: Horas efectivas principales
+hornorpri: Horas normales principales",0.7,"Hours in the main job are available as effective hours (horefepri, the reference-week default in IDB) or normal hours (hornorpri), with 999 set to missing.",,,
+CRI_2022,categopri_ci,Employment category in main job,labor,partly different variables,mapped,c12;c13a;d1,"c12: Posición en el empleo
+c13a: Por el trabajo le pagan algo en dinero o en especie
+d1: Negocio contrata personas asalariadas",mapped,c12;posiemppri,"c12: Posición en el empleo
+posiemppri: Posición en el empleo principal",0.85,"posiemppri gives position in main job (employer 21, own account 22, employee 11/12, unpaid 13), mapped to employer, own_account, employee and unpaid.",,,
+CRI_2022,tipocontrato_ci,Type of contract in main job,labor,model adds variables,mapped,e1,e1: Estabilidad del empleo,mapped,e1;estabili;posiemppri,"e1: Estabilidad del empleo
+estabili: Estabilidad en el empleo
+posiemppri: Posición en el empleo principal",0.4,"There is no written-contract question, so contract type has to be proxied from job stability (e1/estabili) among wage earners, which is only an approximation.",,,
+CRI_2022,spublico_ci,Works in the public sector,labor,"reference: not available, model: maps it",not_available,,,mapped,secfuerzatrab;secinspri,"secfuerzatrab: Sector institucional de la fuerza de trabajo
+secinspri: Clasificación sectorial del empleo principal (agrupada)",0.75,"The institutional sector of the main job (secinspri, code 3 = general government) or secfuerzatrab (codes 1-2 = public sector) identifies public employment.",,,
+CRI_2022,ylmpri_ci,"Monetary labor income, main job",income,different variables,mapped,aif;asp;bsp;dif;gpia;gpif;gpina;gpsfi;ipsp;ithn;oisp;sesp;spif;spmn,"aif: Aguinaldo principal independiente formal
+asp: Aguinaldo del salario principal
+bsp: Bonificaciones al salario principal
+dif: Dividendos principal independiente formal
+gpia: Ganancia principal independiente agropecuario
+gpif: Gastos personales principal independiente formal
+gpina: Ganancia principal independiente no agropecuaria
+gpsfi: Ganancia principal socio familiar independiente
+ipsp: Ingreso por propinas del salario principal
+ithn: Ingreso total del hogar neto
+oisp: Otros ingresos del salario principal
+sesp: Salario escolar del salario principal
+spif: Salario principal independiente formal
+spmn: Salario principal monetario neto",mapped,ipbt;ipit;ipnt;ipsbt;ipsmb;spmb,"ipbt: INGRESO PRINCIPAL BRUTO TOTAL
+ipit: Ingreso principal independiente total
+ipnt: INGRESO PRINCIPAL NETO TOTAL
+ipsbt: Ingreso principal salario bruto total
+ipsmb: Ingreso principal salario monetario bruto
+spmb: Salario principal monetario bruto",0.6,"The survey provides a derived main-job income (ipbt gross, ipnt net, with salary and independent components) which can be used directly for monetary labor income in the main job, excluding the non-monetary parts.",,,
+CRI_2022,ylnmpri_ci,"Non-monetary labor income, main job",income,partly different variables,mapped,inmpia;inmpina;ithn;spnma;spnmo;spnmt;spnmv;spnmvh,"inmpia: Ingreso no monetario principal independiente agropecuario
+inmpina: Ingreso no monetario principal independiente no agropecuario
+ithn: Ingreso total del hogar neto
+spnma: Salario principal no monetario alimentación
+spnmo: Salario principal no monetario otros
+spnmt: Salario principal no monetario transporte
+spnmv: Salario principal no monetario vivienda
+spnmvh: Salario principal no monetario vehículo",mapped,inmpia;inmpina;spnma;spnmo;spnmt;spnmv;spnmvh;tspnm,"inmpia: Ingreso no monetario principal independiente agropecuario
+inmpina: Ingreso no monetario principal independiente no agropecuario
+spnma: Salario principal no monetario alimentación
+spnmo: Salario principal no monetario otros
+spnmt: Salario principal no monetario transporte
+spnmv: Salario principal no monetario vivienda
+spnmvh: Salario principal no monetario vehículo
+tspnm: Total salario principal no monetario",0.7,"Non-monetary income of the main job is the total non-monetary salary (tspnm, built from spnma/spnmv/spnmt/spnmvh/spnmo) plus non-monetary independent income (inmpina, inmpia), or alternatively ipinm.",,,
+CRI_2022,ylmsec_ci,"Monetary labor income, second job",income,different variables,mapped,gsi;ithn;ssmn,"gsi: Ganancia secundario independiente
+ithn: Ingreso total del hogar neto
+ssmn: Salario secundario monetario neto",mapped,isit;issb,"isit: Ingreso secundario independiente total
+issb: Ingreso secundario salario bruto",0.6,"Monetary income of the second job is the secondary salary (issb, or ssmb) plus secondary independent income (isit); this assumes isit includes the non-monetary part, otherwise use ssif/gsi components.",,,
+CRI_2022,ynlm_ci,Total monetary non-labor income,income,different variables,mapped,ia;ib;id;ii;ithn;ot;tapa;tape;tapn;taprnc;tbc;tdp;te;timas;tpa;tpe;tpn;trnc;ts,"ia: Ingreso por alquileres
+ib: Ingreso por beneficios
+id: Ingreso por dividendos
+ii: Ingreso por intereses
+ithn: Ingreso total del hogar neto
+ot: Otras transferencias
+tapa: Transferencia aguinaldo pensión alimentaria
+tape: Transferencia aguinaldo pensión extranjera
+tapn: Transferencia aguinaldo pensión nacional
+taprnc: Transferencia aguinaldo pensión RNC
+tbc: Transferencia becas
+tdp: Transferencia dentro del país
+te: Transferencia del extranjero
+timas: Transferencia Imas
+tpa: Transferencia pensión alimentaria
+tpe: Transferencia pensión del extranjero
+tpn: Transferencia pensión nacional
+trnc: Transferencia RNC
+ts: Transferencia subsidios",mapped,irp;ttm,"irp: INGRESO POR RENTA DE LA PROPIEDAD
+ttm: TOTAL TRANSFERENCIAS MONETARIAS",0.7,"Monetary non-labor income is property income (irp) plus total monetary transfers (ttm), which includes pensions and remittances.",,,
+CRI_2022,remesas_ci,Remittances received,income,partly different variables,mapped,ithn;te,"ithn: Ingreso total del hogar neto
+te: Transferencia del extranjero",mapped,h9k1;h9k2;te,"h9k1: Monto dinero del exterior (remesas)
+h9k2: Periodo dinero del exterior (remesas)
+te: Transferencia del extranjero",0.8,"Remittances are the transfers from abroad (te), derived from h9k1 with its period h9k2.",,,
+CRI_2022,aedu_ci,Years of schooling completed,education,different variables,mapped,a14,a14: Último año aprobado,mapped,escolari,escolari: Años de escolaridad,0.9,escolari directly gives years of schooling; a14 or nivinst could serve as a fallback.,,,
+CRI_2022,edupub_ci,Attends a public institution,education,model adds variables,mapped,a15a,a15a: Tipo de centro educativo al que asiste o asistió,mapped,a13;a15a,"a13: Asistencia a educación formal
+a15a: Tipo de centro educativo al que asiste o asistió",0.8,"a15a gives the type of school attended (1=Público), conditioned on current attendance from a13.",,,
+CRI_2022,aguared_ch,Piped water access,housing,model adds variables,mapped,v11,v11: Abastecimiento de agua de la vivienda,mapped,v11;v12,"v11: Abastecimiento de agua de la vivienda
+v12: Fuente de agua de consumo de la vivienda",0.8,"v11 gives piped water supply (1-3 vs 0), while v12 can help refine whether the source is a public network.",,,
+CRI_2022,bano_ch,Sanitation facility,housing,model adds variables,mapped,v14a,v14a: Tenencia de baño de la vivienda,mapped,v13a;v13b;v14a;v14b,"v13a: Servicio sanitario de la vivienda
+v13b: Exclusividad del servicio sanitario de la vivienda
+v14a: Tenencia de baño de la vivienda
+v14b: Exclusividad del uso del baño en la vivienda",0.85,"v13a gives the type of sanitation system, v13b/v14b give whether it is shared, and v14a gives whether the dwelling has a bathroom.",,,
+CRI_2022,migrante_ci,International migrant,demographics,model adds variables,mapped,lugnac,lugnac: Lugar de nacimiento,mapped,condmig;lugnac,"condmig: Condición de Migrante
+lugnac: Lugar de nacimiento",0.6,"condmig=2 (external migrant) or lugnac codes 2-4 and 8 indicate birth abroad; the survey measures the mother's residence at birth, so this is an approximation of international migrant.",,,
