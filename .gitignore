@@ -1,0 +1,17 @@
+# microdata never goes to GitHub
+data/*
+!data/README.md
+reference/
+
+# python / R
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+.Rhistory
+.RData
+.Rproj.user/
+renv/library/
+
+# secrets
+.env
